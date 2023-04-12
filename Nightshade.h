@@ -3,7 +3,7 @@
 
 class Nightshade : public Plant {
 public:
-	Nightshade();
+	Nightshade(int xPosition, int yPosition);
 	void collision() override;
 	~Nightshade();
 };

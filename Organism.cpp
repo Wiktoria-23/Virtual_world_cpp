@@ -13,6 +13,12 @@ int Organism::getX() const {
 int Organism::getY() const {
 	return y;
 }
+char Organism::getImage() const {
+	return image;
+}
+int Organism::getAge() const {
+	return age;
+}
 void Organism::print() const {
 
 }

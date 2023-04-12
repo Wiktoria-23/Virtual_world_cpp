@@ -1,7 +1,10 @@
 #include "SosnowskyHogweed.h"
 
-SosnowskyHogweed::SosnowskyHogweed() {
+SosnowskyHogweed::SosnowskyHogweed(int xPosition, int yPosition) {
 	strength = 10;
+	image = 'B';
+	x = xPosition;
+	y = yPosition;
 }
 void SosnowskyHogweed::action() {
 

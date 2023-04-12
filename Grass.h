@@ -3,6 +3,6 @@
 
 class Grass : public Plant {
 public:
-	Grass();
+	Grass(int xPosition, int yPosition);
 	~Grass();
 };

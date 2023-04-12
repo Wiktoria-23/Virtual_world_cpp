@@ -3,7 +3,7 @@
 
 class Guarana : public Plant {
 public:
-	Guarana();
+	Guarana(int xPosition, int yPosition);
 	void collision() override;
 	~Guarana();
 };

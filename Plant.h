@@ -5,6 +5,6 @@ class Plant : public Organism {
 public:
 	Plant();
 	virtual void action() override;
-	virtual void collision() = 0;
+	virtual void collision() override;
 	~Plant();
 };

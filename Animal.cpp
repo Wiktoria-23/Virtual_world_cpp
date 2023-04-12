@@ -3,16 +3,16 @@
 void Animal::action() {
 	direction moveDirection = (direction)(rand() % 4);
 	if (moveDirection == LEFT) {
-		x -= 2;
+		x -= 1;
 	}
 	else if (moveDirection == RIGHT) {
-		x += 2;
+		x += 1;
 	}
 	else if (moveDirection == UP) {
-		y += 2;
+		y += 1;
 	}
 	else if (moveDirection == DOWN) {
-		y -= 2;
+		y -= 1;
 	}
 }
 void Animal::collision() {

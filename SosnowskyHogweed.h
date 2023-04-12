@@ -3,7 +3,7 @@
 
 class SosnowskyHogweed : public Plant {
 public:
-	SosnowskyHogweed();
+	SosnowskyHogweed(int xPosition, int yPosition);
 	void action() override;
 	void collision() override;
 	~SosnowskyHogweed();

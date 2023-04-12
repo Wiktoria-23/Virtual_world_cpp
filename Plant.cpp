@@ -7,6 +7,9 @@ Plant::Plant() {
 void Plant::action() {
 	//growth
 }
+void Plant::collision() {
+
+}
 Plant::~Plant() {
 
 }

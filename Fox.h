@@ -3,7 +3,7 @@
 
 class Fox : public Animal {
 public:
-	Fox();
+	Fox(int xPosition, int yPosition);
 	void action() override;
 	~Fox();
 };

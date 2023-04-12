@@ -3,6 +3,6 @@
 
 class Wolf : public Animal {
 public:
-	Wolf();
+	Wolf(int xPosition, int yPosition);
 	~Wolf();
 };

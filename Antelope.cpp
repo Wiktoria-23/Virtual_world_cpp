@@ -1,7 +1,9 @@
 #include "Antelope.h"
 
-Antelope::Antelope() {
-
+Antelope::Antelope(int xPosition, int yPosition) {
+	image = 'A';
+	x = xPosition;
+	y = yPosition;
 }
 void Antelope::action() {
 

@@ -3,7 +3,7 @@
 
 class Antelope : public Animal {
 public:
-	Antelope();
+	Antelope(int xPosition, int yPosition);
 	void action() override;
 	void collision() override;
 	~Antelope();

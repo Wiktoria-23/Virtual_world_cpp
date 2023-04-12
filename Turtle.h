@@ -3,7 +3,7 @@
 
 class Turtle : public Animal {
 public:
-	Turtle();
+	Turtle(int XPosition, int yPosition);
 	void action() override;
 	void collision() override;
 	~Turtle();
