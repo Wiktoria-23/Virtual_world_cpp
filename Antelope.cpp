@@ -1,9 +1,8 @@
 #include "Antelope.h"
 
-Antelope::Antelope(int xPosition, int yPosition) {
+Antelope::Antelope(int xPosition, int yPosition, World* newWorld) : Animal(xPosition, yPosition, newWorld) {
 	image = 'A';
-	x = xPosition;
-	y = yPosition;
+	speed = 2;
 }
 void Antelope::action() {
 

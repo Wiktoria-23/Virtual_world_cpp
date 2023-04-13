@@ -1,10 +1,8 @@
 #include "Nightshade.h"
 
-Nightshade::Nightshade(int xPosition, int yPosition) {
+Nightshade::Nightshade(int xPosition, int yPosition, World* newWorld) : Plant(xPosition, yPosition, newWorld) {
 	strength = 99;
 	image = 'J';
-	x = xPosition;
-	y = yPosition;
 }
 void Nightshade::collision() {
 	//kills an animal

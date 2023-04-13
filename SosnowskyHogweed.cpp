@@ -1,10 +1,8 @@
 #include "SosnowskyHogweed.h"
 
-SosnowskyHogweed::SosnowskyHogweed(int xPosition, int yPosition) {
+SosnowskyHogweed::SosnowskyHogweed(int xPosition, int yPosition, World* newWorld) : Plant(xPosition, yPosition, newWorld) {
 	strength = 10;
 	image = 'B';
-	x = xPosition;
-	y = yPosition;
 }
 void SosnowskyHogweed::action() {
 

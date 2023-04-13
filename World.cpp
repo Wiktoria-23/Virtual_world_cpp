@@ -23,10 +23,15 @@ World::World(int xSize, int ySize) : roundCounter(NULL), boardX(xSize), boardY(y
 	createOrganisms<Guarana>();
 	createOrganisms<Nightshade>();
 	createOrganisms<SosnowskyHogweed>();
-	coordinates newCoordinates = *getEmptyField();
-	Human* newHuman = new Human(newCoordinates.x, newCoordinates.y);
+	coordinates newCoordinates = *getRandomEmptyField();
+	Human* newHuman = new Human(newCoordinates.x, newCoordinates.y, this);
 	allOrganisms.push_back(newHuman);
 	sortOrganisms();
+}
+int World::randOrganismsAmount() {
+	int field = boardX * boardY;
+	int maxOccupied = field / 100 * 3; // setting maxOccupied field by organism type to 3% of whole field
+	return rand() % maxOccupied + 1; //cannot return 0
 }
 void World::performRound() {
 	for (int i = 0; i < allOrganisms.size(); i++) {
@@ -73,7 +78,7 @@ int World::getRoundCounter() {
 void World::incrementRoundCounter() {
 	roundCounter += 1;
 }
-coordinates* World::getEmptyField() {
+coordinates* World::getRandomEmptyField() {
 	coordinates newCoordinates = { rand() % boardX, rand() % boardY };
 	while (checkFieldXY(newCoordinates.x, newCoordinates.y)) {
 		newCoordinates = { rand() % boardX, rand() % boardY };

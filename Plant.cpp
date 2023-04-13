@@ -1,7 +1,7 @@
 #include "Plant.h"
 #include "Organism.h"
 
-Plant::Plant() {
+Plant::Plant(int xPosition, int yPosition, World* newWorld) : Organism(xPosition, yPosition, newWorld) {
 	initiative = 0;
 }
 void Plant::action() {

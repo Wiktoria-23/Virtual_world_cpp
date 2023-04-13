@@ -3,7 +3,7 @@
 
 class Plant : public Organism {
 public:
-	Plant();
+	Plant(int xPosition, int yPosition, World* newWorld);
 	virtual void action() override;
 	virtual void collision() override;
 	~Plant();

@@ -1,6 +1,8 @@
 #include "Organism.h"
 #include "World.h"
 
+Organism::Organism(int xPosition, int yPosition, World* newWorld) : x(xPosition), y(yPosition), currentWorld(newWorld) {
+}
 int Organism::getStrength() const {
 	return strength;
 }

@@ -1,4 +1,7 @@
 #pragma once
+#ifndef WORLD_H
+#define WORLD_H
+
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
@@ -22,11 +25,12 @@ private:
 	vector<Organism*> allOrganisms;
 public:
 	World(int xSize, int ySize);
+	int randOrganismsAmount();
 	template <typename T>
 	void createOrganisms() {
-		for (int i = 0; i < START_AMOUNT; i++) {
-			coordinates newCoordinates = *getEmptyField();
-			T* newOrganism = new T(newCoordinates.x, newCoordinates.y);
+		for (int i = 0; i < randOrganismsAmount(); i++) {
+			coordinates newCoordinates = *getRandomEmptyField();//poprawiæ konstruktory klas
+			T* newOrganism = new T(newCoordinates.x, newCoordinates.y, this);
 			allOrganisms.push_back(newOrganism);
 		}
 	}
@@ -34,9 +38,11 @@ public:
 	void performRound();
 	int getRoundCounter();
 	void incrementRoundCounter();
-	coordinates* getEmptyField();
+	coordinates* getRandomEmptyField();
 	char getImageXY(int x, int y);
 	bool checkFieldXY(int x, int y);
 	void sortOrganisms();
 	~World();
 };
+
+#endif // !WORLD_H

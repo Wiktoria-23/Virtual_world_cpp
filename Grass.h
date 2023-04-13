@@ -3,6 +3,6 @@
 
 class Grass : public Plant {
 public:
-	Grass(int xPosition, int yPosition);
+	Grass(int xPosition, int yPosition, World* newWorld);
 	~Grass();
 };

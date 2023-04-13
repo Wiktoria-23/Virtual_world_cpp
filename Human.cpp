@@ -1,12 +1,10 @@
 #include "Human.h"
 
-Human::Human(int xPosition, int yPosition) {
+Human::Human(int xPosition, int yPosition, World* newWorld) : Animal(xPosition, yPosition, newWorld) {
 	strength = 5;
 	initiative = 4;
 	superpowerActive = false;
 	image = 'C';
-	x = xPosition;
-	y = yPosition;
 }
 void Human::action() {
 	if (superpowerActive) {

@@ -12,6 +12,7 @@ protected:
 	int age;
 	World* currentWorld;
 public: 
+	Organism(int xPosition, int yPosition, World* newWorld);
 	int getStrength() const;
 	int getInitiative() const;
 	int getX() const;

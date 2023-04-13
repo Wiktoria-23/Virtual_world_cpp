@@ -3,7 +3,7 @@
 
 class Dandelion : public Plant {
 public:
-	Dandelion(int xPosition, int yPosition);
+	Dandelion(int xPosition, int yPosition, World* newWorld);
 	void action() override;
 	~Dandelion();
 };

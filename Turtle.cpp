@@ -1,11 +1,9 @@
 #include "Turtle.h"
 
-Turtle::Turtle(int xPosition, int yPosition) {
+Turtle::Turtle(int xPosition, int yPosition, World* newWorld) : Animal(xPosition, yPosition, newWorld) {
 	strength = 2;
 	initiative = 1;
 	image = 'Z';
-	x = xPosition;
-	y = yPosition;
 }
 void Turtle::action() {
 	//move every fourth round
