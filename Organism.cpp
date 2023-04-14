@@ -1,7 +1,6 @@
 #include "Organism.h"
-#include "World.h"
 
-Organism::Organism(int xPosition, int yPosition, World* newWorld) : x(xPosition), y(yPosition), currentWorld(newWorld) {
+Organism::Organism(int xPosition, int yPosition, World* newWorld) : x(xPosition), y(yPosition), currentWorld(newWorld), age(NULL) {
 }
 int Organism::getStrength() const {
 	return strength;
@@ -21,8 +20,11 @@ char Organism::getImage() const {
 int Organism::getAge() const {
 	return age;
 }
-void Organism::print() const {
-
+bool Organism::checkCollision() const {
+	if (currentWorld->checkFieldXY(x, y)) {
+		return true;
+	}
+	return false;
 }
 Organism::~Organism() {
 

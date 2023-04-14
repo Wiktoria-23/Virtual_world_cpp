@@ -1,4 +1,4 @@
-#include "World.h"
+#include <math.h>
 #include "Organism.h"
 #include "Wolf.h"
 #include "Sheep.h"
@@ -12,7 +12,7 @@
 #include "SosnowskyHogweed.h"
 #include "Human.h"
 
-World::World(int xSize, int ySize) : roundCounter(NULL), boardX(xSize), boardY(ySize) {
+World::World(int xSize, int ySize) : roundCounter(NULL), boardSizeX(xSize), boardSizeY(ySize) {
 	createOrganisms<Wolf>();
 	createOrganisms<Sheep>();
 	createOrganisms<Fox>();
@@ -29,16 +29,19 @@ World::World(int xSize, int ySize) : roundCounter(NULL), boardX(xSize), boardY(y
 	sortOrganisms();
 }
 int World::randOrganismsAmount() {
-	int field = boardX * boardY;
-	int maxOccupied = field / 100 * 3; // setting maxOccupied field by organism type to 3% of whole field
+	float field = boardSizeX * boardSizeY;
+	int maxOccupied = ceil(field / 100 * 3); // setting maxOccupied field by organism type to 3% of whole field
 	return rand() % maxOccupied + 1; //cannot return 0
 }
 void World::performRound() {
 	for (int i = 0; i < allOrganisms.size(); i++) {
 		allOrganisms[i]->action();
+		if (allOrganisms[i]->checkCollision()) {
+			allOrganisms[i]->collision();
+		}
 	}
 }
-char World::getImageXY(int x, int y) {
+char World::getImageXY(int x, int y) const {
 	int organismsAmount = allOrganisms.size();
 	for (int i = 0; i < organismsAmount; i++) {
 		if (allOrganisms[i]->getX() == x && allOrganisms[i]->getY() == y) {
@@ -47,7 +50,7 @@ char World::getImageXY(int x, int y) {
 	}
 	return EMPTY;
 }
-bool World::checkFieldXY(int x, int y) {
+bool World::checkFieldXY(int x, int y) const {
 	int organismsAmount = allOrganisms.size();
 	for (int i = 0; i < organismsAmount; i++) {
 		if (allOrganisms[i]->getX() == x && allOrganisms[i]->getY() == y) {
@@ -56,15 +59,28 @@ bool World::checkFieldXY(int x, int y) {
 	}
 	return false;
 }
-void World::printWorld() {
+int World::getBoardSizeX() const {
+	return boardSizeX;
+}
+int World::getBoardSizeY() const {
+	return boardSizeY;
+}
+Organism& World::getOrganismFromXY(int x, int y) {
+	for (int i = 0; i < allOrganisms.size(); i++) {
+		if (allOrganisms[i]->getX() == x && allOrganisms[i]->getY() == y) {
+			return *allOrganisms[i];
+		}
+	}
+}
+void World::printWorld() const {
 	system("cls");
 	cout << "Wiktoria Kubacka 193370" << endl << endl;
-	for (int x = 0; x < boardX; x++) {
+	for (int x = 0; x < boardSizeX; x++) {
 		cout << "__";
 	}
 	cout << endl;
-	for (int y = 0; y < boardY; y++) {
-		for (int x = 0; x < boardX; x++) {
+	for (int y = 0; y < boardSizeY; y++) {
+		for (int x = 0; x < boardSizeY; x++) {
 			cout << "|";
 			cout << getImageXY(x, y);
 		}
@@ -72,16 +88,16 @@ void World::printWorld() {
 	}
 	cout << endl;
 }
-int World::getRoundCounter() {
+int World::getRoundCounter() const {
 	return roundCounter;
 }
 void World::incrementRoundCounter() {
 	roundCounter += 1;
 }
-coordinates* World::getRandomEmptyField() {
-	coordinates newCoordinates = { rand() % boardX, rand() % boardY };
+coordinates* World::getRandomEmptyField() const {
+	coordinates newCoordinates = { rand() % boardSizeX, rand() % boardSizeY };
 	while (checkFieldXY(newCoordinates.x, newCoordinates.y)) {
-		newCoordinates = { rand() % boardX, rand() % boardY };
+		newCoordinates = { rand() % boardSizeX, rand() % boardSizeY };
 	}
 	return &newCoordinates;
 }

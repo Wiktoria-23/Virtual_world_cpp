@@ -1,6 +1,8 @@
-#pragma once
+#ifndef ORGANISM_H
+#define ORGANISM_H
 
-class World;
+#pragma once
+#include "World.h"
 
 class Organism {
 protected:
@@ -11,7 +13,7 @@ protected:
 	char image;
 	int age;
 	World* currentWorld;
-public: 
+public:
 	Organism(int xPosition, int yPosition, World* newWorld);
 	int getStrength() const;
 	int getInitiative() const;
@@ -19,8 +21,10 @@ public:
 	int getY() const;
 	char getImage() const;
 	int getAge() const;
+	bool checkCollision() const;
 	virtual void action() = 0;
 	virtual void collision() = 0;
-	void print() const;
 	virtual ~Organism();
 };
+
+#endif // !ORGANISM_H

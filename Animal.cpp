@@ -10,15 +10,40 @@ void Animal::baseMovement(direction moveDirection) {
 		x += speed;
 	}
 	else if (moveDirection == UP) {
-		y += speed;
-	}
-	else if (moveDirection == DOWN) {
 		y -= speed;
 	}
+	else if (moveDirection == DOWN) {
+		y += speed;
+	}
+}
+bool Animal::checkMove(direction moveDirection) {
+	int tmpX = x;
+	int tmpY = y;
+	if (moveDirection == LEFT) {
+		tmpX -= speed;
+	}
+	else if (moveDirection == RIGHT) {
+		tmpX += speed;
+	}
+	else if (moveDirection == UP) {
+		tmpY -= speed;
+	}
+	else if (moveDirection == DOWN) {
+		tmpY += speed;
+	}
+	if (tmpX >= 0 && tmpX < currentWorld->getBoardSizeX() && tmpY >= 0 && tmpY < currentWorld->getBoardSizeY()) {
+		return true;
+	}
+	return false;
 }
 void Animal::action() {
-	direction moveDirection = (direction)(rand() % 4);//dodaæ brak mo¿liwoœci wychodzenia poza planszê
-	baseMovement(moveDirection);
+	while (true) {
+		direction moveDirection = (direction)(rand() % 4);
+		if (checkMove(moveDirection)) {
+			baseMovement(moveDirection);
+			break;
+		}
+	}
 }
 void Animal::collision() {
 

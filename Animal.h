@@ -1,5 +1,7 @@
-#pragma once
+#ifndef ANIMAL_H
+#define ANIMAL_H
 
+#pragma once
 #include "Organism.h"
 #include <stdlib.h>
 
@@ -18,4 +20,7 @@ public:
 	virtual void action() override;
 	virtual void collision() override;
 	void baseMovement(direction moveDirection);
+	bool checkMove(direction moveDirection);
 };
+
+#endif // !ANIMAL_H

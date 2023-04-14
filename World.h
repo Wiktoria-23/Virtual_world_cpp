@@ -20,29 +20,32 @@ class Organism;
 class World {
 private:
 	int roundCounter;
-	int boardX;
-	int boardY;
+	int boardSizeX;
+	int boardSizeY;
 	vector<Organism*> allOrganisms;
 public:
 	World(int xSize, int ySize);
 	int randOrganismsAmount();
+	void printWorld() const;
+	void performRound();
+	int getRoundCounter() const;
+	void incrementRoundCounter();
+	coordinates* getRandomEmptyField() const;
+	char getImageXY(int x, int y) const;
+	bool checkFieldXY(int x, int y) const;
+	int getBoardSizeX() const;
+	int getBoardSizeY() const;
+	Organism& getOrganismFromXY(int x, int y);
+	void sortOrganisms();
+	~World();
 	template <typename T>
 	void createOrganisms() {
 		for (int i = 0; i < randOrganismsAmount(); i++) {
-			coordinates newCoordinates = *getRandomEmptyField();//poprawiæ konstruktory klas
+			coordinates newCoordinates = *getRandomEmptyField();
 			T* newOrganism = new T(newCoordinates.x, newCoordinates.y, this);
 			allOrganisms.push_back(newOrganism);
 		}
 	}
-	void printWorld();
-	void performRound();
-	int getRoundCounter();
-	void incrementRoundCounter();
-	coordinates* getRandomEmptyField();
-	char getImageXY(int x, int y);
-	bool checkFieldXY(int x, int y);
-	void sortOrganisms();
-	~World();
 };
 
 #endif // !WORLD_H
