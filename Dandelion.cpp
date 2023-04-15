@@ -5,7 +5,7 @@ Dandelion::Dandelion(int xPosition, int yPosition, World* newWorld) : Plant(xPos
 	image = 'M';
 }
 void Dandelion::action() {
-	//triple
+	//próbuje siê rozprzestrzeniæ trzy razy
 }
 Dandelion::~Dandelion() {
 

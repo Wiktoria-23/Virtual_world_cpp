@@ -4,9 +4,6 @@ Antelope::Antelope(int xPosition, int yPosition, World* newWorld) : Animal(xPosi
 	image = 'A';
 	speed = 2;
 }
-void Antelope::action() {
-
-}
 void Antelope::collision() {
 
 }

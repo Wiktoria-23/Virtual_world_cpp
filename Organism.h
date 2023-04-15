@@ -4,6 +4,14 @@
 #pragma once
 #include "World.h"
 
+enum direction {
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN,
+	NONE,
+};
+
 class Organism {
 protected:
 	int strength;

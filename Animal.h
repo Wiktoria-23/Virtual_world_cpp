@@ -5,13 +5,6 @@
 #include "Organism.h"
 #include <stdlib.h>
 
-enum direction {
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN,
-};
-
 class Animal : public Organism {
 protected:
 	int speed = 1;

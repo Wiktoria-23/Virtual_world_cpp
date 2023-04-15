@@ -101,6 +101,15 @@ coordinates* World::getRandomEmptyField() const {
 	}
 	return &newCoordinates;
 }
+Human* World::getHuman() {
+	for (int i = 0; i < allOrganisms.size(); i++) {
+		Human* humanPointer = dynamic_cast<Human*>(allOrganisms[i]);
+		if (humanPointer != nullptr) {
+			return humanPointer;
+		}
+	}
+	return nullptr;
+}
 void World::sortOrganisms() {
 	int i = 0;
 	for (int j = i; j < allOrganisms.size(); j++) {

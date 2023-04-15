@@ -16,6 +16,7 @@ struct coordinates {
 };
 
 class Organism;
+class Human;
 
 class World {
 private:
@@ -36,15 +37,20 @@ public:
 	int getBoardSizeX() const;
 	int getBoardSizeY() const;
 	Organism& getOrganismFromXY(int x, int y);
+	Human* getHuman();
 	void sortOrganisms();
 	~World();
 	template <typename T>
 	void createOrganisms() {
 		for (int i = 0; i < randOrganismsAmount(); i++) {
 			coordinates newCoordinates = *getRandomEmptyField();
-			T* newOrganism = new T(newCoordinates.x, newCoordinates.y, this);
-			allOrganisms.push_back(newOrganism);
+			createOrganism<T>(newCoordinates);
 		}
+	}
+	template <typename T>
+	void createOrganism(coordinates newCoordinates) {
+		T* newOrganism = new T(newCoordinates.x, newCoordinates.y, this);
+		allOrganisms.push_back(newOrganism);
 	}
 };
 
