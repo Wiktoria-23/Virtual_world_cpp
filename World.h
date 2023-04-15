@@ -38,19 +38,20 @@ public:
 	int getBoardSizeY() const;
 	Organism& getOrganismFromXY(int x, int y);
 	Human* getHuman();
+	void addOrganism(Organism* newOrganism);
 	void sortOrganisms();
 	~World();
 	template <typename T>
 	void createOrganisms() {
 		for (int i = 0; i < randOrganismsAmount(); i++) {
 			coordinates newCoordinates = *getRandomEmptyField();
-			createOrganism<T>(newCoordinates);
+			createOrganism<T>(newCoordinates.x, newCoordinates.y);
 		}
 	}
 	template <typename T>
-	void createOrganism(coordinates newCoordinates) {
-		T* newOrganism = new T(newCoordinates.x, newCoordinates.y, this);
-		allOrganisms.push_back(newOrganism);
+	void createOrganism(int x, int y) {
+		T* newOrganism = new T(x, y, this);
+		allOrganisms.insert(allOrganisms.begin(), newOrganism);
 	}
 };
 

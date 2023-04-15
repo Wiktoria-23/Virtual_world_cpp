@@ -39,17 +39,27 @@ bool Fox::checkField(direction moveDirection) {
 		return true;
 	}
 }
+bool Fox::checkIfAnyMovePossible() {
+	if (!currentWorld->checkFieldXY(x - 1, y) || !currentWorld->checkFieldXY(x + 1, y) || !currentWorld->checkFieldXY(x, y - 1) || !currentWorld->checkFieldXY(x, y + 1)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 void Fox::action() {
-	direction moveDirection;
-	while (true) {
-		moveDirection = (direction)(rand() % 4);
-		if (checkMove(moveDirection)) {
-			if (checkField(moveDirection)) {
-				break;
+	if (checkIfAnyMovePossible()) {
+		direction moveDirection;
+		while (true) {
+			moveDirection = (direction)(rand() % 4);
+			if (checkMove(moveDirection)) {
+				if (checkField(moveDirection)) {
+					break;
+				}
 			}
 		}
+		baseMovement(moveDirection);
 	}
-	baseMovement(moveDirection);
 }
 Fox::~Fox() {
 

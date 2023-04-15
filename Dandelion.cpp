@@ -4,6 +4,10 @@ Dandelion::Dandelion(int xPosition, int yPosition, World* newWorld) : Plant(xPos
 	strength = 0;
 	image = 'M';
 }
+Organism* Dandelion::createChild(int xPosition, int yPosition) const {
+	Organism* newDandelion = new Dandelion(xPosition, yPosition, currentWorld);
+	return newDandelion;
+}
 void Dandelion::action() {
 	//próbuje siê rozprzestrzeniæ trzy razy
 }

@@ -1,6 +1,7 @@
 #include "Organism.h"
 
 Organism::Organism(int xPosition, int yPosition, World* newWorld) : x(xPosition), y(yPosition), currentWorld(newWorld), age(NULL) {
+
 }
 int Organism::getStrength() const {
 	return strength;
@@ -26,6 +27,9 @@ bool Organism::checkCollision() const {
 	}
 	return false;
 }
+//Organism* Organism::createChild(int xPosition, int yPosition) const {
+//
+//}
 Organism::~Organism() {
 
 }

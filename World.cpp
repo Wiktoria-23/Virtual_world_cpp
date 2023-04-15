@@ -24,8 +24,8 @@ World::World(int xSize, int ySize) : roundCounter(NULL), boardSizeX(xSize), boar
 	createOrganisms<Nightshade>();
 	createOrganisms<SosnowskyHogweed>();
 	coordinates newCoordinates = *getRandomEmptyField();
-	Human* newHuman = new Human(newCoordinates.x, newCoordinates.y, this);
-	allOrganisms.push_back(newHuman);
+	/*Human* newHuman = new Human(newCoordinates.x, newCoordinates.y, this);
+	allOrganisms.push_back(newHuman);*/
 	sortOrganisms();
 }
 int World::randOrganismsAmount() {
@@ -36,9 +36,9 @@ int World::randOrganismsAmount() {
 void World::performRound() {
 	for (int i = 0; i < allOrganisms.size(); i++) {
 		allOrganisms[i]->action();
-		if (allOrganisms[i]->checkCollision()) {
+		/*if (allOrganisms[i]->checkCollision()) {
 			allOrganisms[i]->collision();
-		}
+		}*/
 	}
 }
 char World::getImageXY(int x, int y) const {
@@ -109,6 +109,9 @@ Human* World::getHuman() {
 		}
 	}
 	return nullptr;
+}
+void World::addOrganism(Organism* newOrganism) {
+	allOrganisms.insert(allOrganisms.begin(), newOrganism);
 }
 void World::sortOrganisms() {
 	int i = 0;

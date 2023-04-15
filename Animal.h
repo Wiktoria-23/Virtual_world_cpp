@@ -14,6 +14,7 @@ public:
 	virtual void collision() override;
 	void baseMovement(direction moveDirection);
 	bool checkMove(direction moveDirection);
+	/*virtual Organism* createChild(int xPosition, int yPosition) const override = 0;*/
 };
 
 #endif // !ANIMAL_H
