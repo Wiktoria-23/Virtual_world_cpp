@@ -29,9 +29,9 @@ public:
 	int getY() const;
 	char getImage() const;
 	int getAge() const;
-	bool checkCollision() const;
 	virtual void action() = 0;
-	virtual void collision() = 0;
+	virtual void collision(Organism* collidingOrganism) = 0;
+	void incrementAgeCounter();
 	/*virtual Organism* createChild(int xPosition, int yPosition) const = 0;*/
 	virtual ~Organism();
 };

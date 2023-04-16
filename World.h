@@ -39,6 +39,7 @@ public:
 	Organism& getOrganismFromXY(int x, int y);
 	Human* getHuman();
 	void addOrganism(Organism* newOrganism);
+	void killOrganismFromXY(int xPosition, int yPosition);
 	void sortOrganisms();
 	~World();
 	template <typename T>

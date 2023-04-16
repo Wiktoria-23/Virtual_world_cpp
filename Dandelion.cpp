@@ -9,7 +9,9 @@ Organism* Dandelion::createChild(int xPosition, int yPosition) const {
 	return newDandelion;
 }
 void Dandelion::action() {
-	//próbuje siê rozprzestrzeniæ trzy razy
+	for (int i = 0; i < 3; i++) {
+		grow();
+	}
 }
 Dandelion::~Dandelion() {
 

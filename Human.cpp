@@ -7,17 +7,9 @@ Human::Human(int xPosition, int yPosition, World* newWorld) : Animal(xPosition, 
 	image = 'C';
 	moveDirection = (direction)NONE;
 }
-void Human::setMoveDirection(direction newMoveDirection) {
-	if (this->checkMove(newMoveDirection)) {
-		moveDirection = newMoveDirection;
-	}
-	else {
-		moveDirection = (direction)NONE;
-	}
-}
 void Human::action() {
-	if (moveDirection != NONE) {
-		baseMovement(moveDirection);
+	if (moveDirection != NONE && checkMove(moveDirection)) {
+		baseMovement();
 	}
 	moveDirection = (direction)NONE;
 }

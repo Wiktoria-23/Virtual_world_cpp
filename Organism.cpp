@@ -21,11 +21,8 @@ char Organism::getImage() const {
 int Organism::getAge() const {
 	return age;
 }
-bool Organism::checkCollision() const {
-	if (currentWorld->checkFieldXY(x, y)) {
-		return true;
-	}
-	return false;
+void Organism::incrementAgeCounter() {
+	age += 1;
 }
 //Organism* Organism::createChild(int xPosition, int yPosition) const {
 //

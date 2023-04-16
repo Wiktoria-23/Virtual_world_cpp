@@ -8,12 +8,15 @@
 class Animal : public Organism {
 protected:
 	int speed = 1;
+	direction moveDirection;
 public:
 	Animal(int xPosition, int yPosition, World* newWorld);
 	virtual void action() override;
-	virtual void collision() override;
-	void baseMovement(direction moveDirection);
+	virtual void collision(Organism* collidingOrganism) override;
+	void setMoveDirection(direction newMoveDirection);
+	void baseMovement();
 	bool checkMove(direction moveDirection);
+	Organism* getCollision(direction moveDirection);
 	/*virtual Organism* createChild(int xPosition, int yPosition) const override = 0;*/
 };
 

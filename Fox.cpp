@@ -5,7 +5,7 @@ Fox::Fox(int xPosition, int yPosition, World* newWorld) : Animal(xPosition, yPos
 	initiative = 7;
 	image = 'L';
 }
-bool Fox::checkField(direction moveDirection) {
+bool Fox::checkField() {
 	if (moveDirection == LEFT) {
 		if (currentWorld->checkFieldXY(x - speed, y)) {
 			if (currentWorld->getOrganismFromXY(x - speed, y).getStrength() > strength) {
@@ -53,12 +53,12 @@ void Fox::action() {
 		while (true) {
 			moveDirection = (direction)(rand() % 4);
 			if (checkMove(moveDirection)) {
-				if (checkField(moveDirection)) {
+				if (checkField()) {
 					break;
 				}
 			}
 		}
-		baseMovement(moveDirection);
+		baseMovement();
 	}
 }
 Fox::~Fox() {

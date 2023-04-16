@@ -7,10 +7,8 @@
 class Human : public Animal {
 private:
 	bool superpowerActive;
-	direction moveDirection;
 public:
 	Human(int xPosition, int yPosition, World* newWorld);
-	void setMoveDirection(direction newMoveDirection);
 	void action() override;
 	void collision() override;
 	~Human();

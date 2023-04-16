@@ -6,6 +6,6 @@ public:
 	Fox(int xPosition, int yPosition, World* newWorld);
 	void action() override;
 	bool checkIfAnyMovePossible();
-	bool checkField(direction moveDirection);
+	bool checkField();
 	~Fox();
 };
