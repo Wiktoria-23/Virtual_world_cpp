@@ -10,6 +10,6 @@ public:
 	Organism* createChild(int xPosition, int yPosition) const override;
 	void action() override;
 	bool checkIfAnyMovePossible();
-	bool checkField();
+	bool checkField(direction moveDirection);
 	~Fox();
 };

@@ -9,7 +9,7 @@ Organism* Fox::createChild(int xPosition, int yPosition) const {
 	Organism* newFox = new Fox(xPosition, yPosition, currentWorld);
 	return newFox;
 }
-bool Fox::checkField() {
+bool Fox::checkField(direction moveDirection) {
 	if (moveDirection == LEFT) {
 		if (currentWorld->checkFieldXY(x - speed, y)) {
 			if (currentWorld->getOrganismFromXY(x - speed, y).getStrength() > strength) {
@@ -34,7 +34,7 @@ bool Fox::checkField() {
 		}
 		return true;
 	}
-	else if (moveDirection == DOWN) {
+	else if (moveDirection == DOWN) {//napraw poruszanie siê lisa
 		if (currentWorld->checkFieldXY(x, y + speed)) {
 			if (currentWorld->getOrganismFromXY(x, y + speed).getStrength() > strength) {
 				return false;
@@ -57,12 +57,13 @@ void Fox::action() {
 		while (true) {
 			moveDirection = (direction)(rand() % 4);
 			if (checkMove(moveDirection)) {
-				if (checkField()) {
+				if (checkField(moveDirection)) {
+					setMoveDirection(moveDirection);
+					baseMovement();
 					break;
 				}
 			}
 		}
-		baseMovement();
 	}
 }
 Fox::~Fox() {

@@ -1,6 +1,6 @@
 #ifndef ORGANISM_H
 #define ORGANISM_H
-
+#define _CRT_SECURE_NO_WARNINGS
 #pragma once
 #include <math.h>
 #include <windows.h>
@@ -37,6 +37,7 @@ public:
 	void baseFight(Organism* collidingOrganism) const;
 	void incrementAgeCounter();
 	Organism* getCollision(direction moveDirection);
+	/*string& createDeathInfo();*/
 	virtual Organism* createChild(int xPosition, int yPosition) const = 0;
 	virtual ~Organism();
 };

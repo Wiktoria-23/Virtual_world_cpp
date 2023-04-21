@@ -15,22 +15,22 @@ World::World(int xSize, int ySize) : roundCounter(NULL), boardSizeX(xSize), boar
 	createOrganisms<Wolf>();
 	createOrganisms<Sheep>();
 	createOrganisms<Fox>();
-	createOrganisms<Turtle>();
+	/*createOrganisms<Turtle>();*/
 	createOrganisms<Antelope>();
-	createOrganisms<Grass>();
+	/*createOrganisms<Grass>();
 	createOrganisms<Dandelion>();
 	createOrganisms<Guarana>();
 	createOrganisms<Nightshade>();
-	createOrganisms<SosnowskyHogweed>();
+	createOrganisms<SosnowskyHogweed>();*/
 	coordinates newCoordinates = *getRandomEmptyField();
 	Human* newHuman = new Human(newCoordinates.x, newCoordinates.y, this);
 	allOrganisms.push_back(newHuman);
 	sortOrganisms();
 	string* info = new string("Stworzono wszystkie organizmy");
-	allEventsInfo.push_back(info);
-}
+	addEventsInfo(info);
+}//napisz rozmna¿anie, komunikaty, kolizje specjalne dla gatunków i specjaln¹ umiejêtnoœæ cz³owieka + zapis
 void World::addEventsInfo(string* newInfo) {
-	//napisz funkcjê
+	allEventsInfo.push_back(newInfo);
 }
 int World::randOrganismsAmount() {
 	float field = boardSizeX * boardSizeY;
@@ -54,7 +54,7 @@ char World::getImageXY(int x, int y) const {
 }
 bool World::checkFieldXY(int x, int y) const {
 	if (x < 0 || x >= getBoardSizeX() || y < 0 || y >= getBoardSizeY()) {//if field is out of border it is treated as occupied
-		return true;
+		return false;
 	}
 	int organismsAmount = allOrganisms.size();
 	for (int i = 0; i < organismsAmount; i++) {
@@ -77,15 +77,35 @@ Organism& World::getOrganismFromXY(int x, int y) {
 		}
 	}
 }
+bool World::checkIfAnimal(int xPosition, int yPosition) {
+	Organism* neighbourOrganism;
+	if (xPosition >= 0 && xPosition < boardSizeX && yPosition >= 0 && boardSizeY) {
+		if (checkFieldXY(xPosition, yPosition)) {
+			neighbourOrganism = &getOrganismFromXY(xPosition, yPosition);
+		}
+		else {
+			neighbourOrganism = nullptr;
+		}
+		if (neighbourOrganism != nullptr) {
+			Animal* animalPointer = dynamic_cast<Animal*>(neighbourOrganism);
+			if (animalPointer != nullptr) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
 void World::printWorld() {
-	system("cls");
+	setCursorPosition(0, 1);
 	cout << "Wiktoria Kubacka 193370" << endl << endl;
 	for (int x = 0; x < boardSizeX; x++) {
+		setCursorPosition(x * 2, 3);
 		cout << "__";
 	}
 	cout << endl;
 	for (int y = 0; y < boardSizeY; y++) {
 		for (int x = 0; x < boardSizeY; x++) {
+			setCursorPosition(x * 2, y + 4);
 			cout << "|";
 			cout << getImageXY(x, y);
 		}
@@ -93,6 +113,12 @@ void World::printWorld() {
 	}
 	cout << endl;
 	int yPosition = 2;
+	for (int i = 0; i < 10; i++) {
+		setCursorPosition(2 * boardSizeX + 5, 2 + yPosition);
+		yPosition += 1;
+		cout << "                                                 ";
+	}
+	yPosition = 2;
 	for (int i = 0; i < allEventsInfo.size(); i++) {
 		if (!allEventsInfo[i]->empty()) {
 			setCursorPosition(2 * boardSizeX + 5, 2 + yPosition);
@@ -101,8 +127,10 @@ void World::printWorld() {
 		}
 	}
 	for (int i = 0; i < allEventsInfo.size(); i++) {
-		allEventsInfo[i]->clear();
+		string* tmp = allEventsInfo[i];
+		delete tmp;
 	}
+	allEventsInfo.clear();
 }
 int World::getRoundCounter() const {
 	return roundCounter;

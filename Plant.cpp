@@ -27,6 +27,11 @@ void Plant::grow() const {
 					if (!currentWorld->checkFieldXY(x, y - 1)) {
 						Organism* newPlant = createChild(x, y - 1);
 						currentWorld->addOrganism(newPlant);
+						/*string* info = new string("Roslina ");
+						char* type = new char(image);
+						info->append(type);*/
+						/*info->append()*///napisaæ funkcjê œwiata wyœwietlaj¹c¹ komunikaty
+						/*currentWorld->addEventsInfo(*/
 						break;
 					}
 				}

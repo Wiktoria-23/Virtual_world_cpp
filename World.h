@@ -3,6 +3,7 @@
 #define WORLD_H
 #include <Windows.h>
 #include <stdlib.h>
+#include <conio.h>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -46,6 +47,7 @@ public:
 	void sortOrganisms();
 	void setCursorPosition(int xPosition, int yPosition);
 	void addEventsInfo(string* newInfo);
+	bool checkIfAnimal(int xPosition, int yPosition);
 	~World();
 	template <typename T>
 	void createOrganisms() {

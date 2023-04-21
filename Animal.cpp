@@ -58,6 +58,9 @@ void Animal::action() {
 		}
 	}
 }
+direction Animal::getMoveDirection() {
+	return moveDirection;
+}
 bool Animal::checkSameType(Organism* collidingOrganism) {
 	if (image == collidingOrganism->getImage()) {
 		return true;
