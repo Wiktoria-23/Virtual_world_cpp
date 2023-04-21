@@ -23,6 +23,7 @@ protected:
 	int y;
 	char image;
 	int age;
+	bool alive;
 	World* currentWorld;
 public:
 	Organism(int xPosition, int yPosition, World* newWorld);
@@ -33,10 +34,12 @@ public:
 	char getImage() const;
 	int getAge() const;
 	virtual void action() = 0;
-	virtual void collision(Organism* collidingOrganism) const = 0;
-	void baseFight(Organism* collidingOrganism) const;
+	virtual void collision(Organism* collidingOrganism) = 0;
+	void baseFight(Organism* collidingOrganism);
 	void incrementAgeCounter();
 	Organism* getCollision(direction moveDirection);
+	void setDeadState();
+	bool checkIfAlive();
 	/*string& createDeathInfo();*/
 	virtual Organism* createChild(int xPosition, int yPosition) const = 0;
 	virtual ~Organism();

@@ -8,7 +8,7 @@ Plant::Plant(int xPosition, int yPosition, World* newWorld) : Organism(xPosition
 void Plant::action() {
 	grow();
 }
-void Plant::collision(Organism* collidingOrganism) const {
+void Plant::collision(Organism* collidingOrganism) {
 
 }
 bool Plant::checkPossibilityToGrow() const {

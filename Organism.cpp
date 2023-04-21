@@ -1,7 +1,6 @@
 #include "Organism.h"
 
-Organism::Organism(int xPosition, int yPosition, World* newWorld) : x(xPosition), y(yPosition), currentWorld(newWorld), age(NULL) {
-
+Organism::Organism(int xPosition, int yPosition, World* newWorld) : x(xPosition), y(yPosition), currentWorld(newWorld), age(NULL), alive(true) {
 }
 Organism* Organism::getCollision(direction moveDirection) {
 	if (moveDirection == UP) {
@@ -32,7 +31,13 @@ Organism* Organism::getCollision(direction moveDirection) {
 		return nullptr;
 	}
 }
-void Organism::baseFight(Organism* collidingOrganism) const {
+void Organism::setDeadState() {
+	alive = false;
+}
+bool Organism::checkIfAlive() {
+	return alive;
+}
+void Organism::baseFight(Organism* collidingOrganism) {
 	if (collidingOrganism->strength > strength) {
 		string* info = new string("Organizm ");
 		char* img = new char[1];
@@ -51,7 +56,7 @@ void Organism::baseFight(Organism* collidingOrganism) const {
 		info->append(*y);
 		info->append(" zostal zabity.");
 		currentWorld->addEventsInfo(info);
-		currentWorld->killOrganismFromXY(getX(), getY());
+		setDeadState();
 	}
 }
 int Organism::getStrength() const {

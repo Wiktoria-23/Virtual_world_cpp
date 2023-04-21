@@ -8,7 +8,7 @@ class Turtle : public Animal {
 public:
 	Turtle(int XPosition, int yPosition, World* newWorld);
 	void action() override;
-	void collision(Organism* collidingOrganism) const override;
+	void collision(Organism* collidingOrganism) override;
 	Organism* createChild(int xPosition, int yPosition) const override;
 	~Turtle();
 };

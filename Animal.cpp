@@ -50,10 +50,10 @@ void Animal::action() {
 		moveDirection = (direction)(rand() % 4);
 		if (checkMove(moveDirection)) {
 			Organism* collidingOrganism = getCollision(moveDirection);
+			baseMovement();
 			if (collidingOrganism != nullptr) {
 				collision(collidingOrganism);
 			}
-			baseMovement();
 			break;
 		}
 	}
@@ -67,9 +67,12 @@ bool Animal::checkSameType(Organism* collidingOrganism) {
 	}
 	return false;
 }
-void Animal::collision(Organism* collidingOrganism) const {
+void Animal::collision(Organism* collidingOrganism) {
 	if (image != collidingOrganism->getImage()) {
 		baseFight(collidingOrganism);
+		if (collidingOrganism->checkIfAlive()) {
+			collidingOrganism->collision(this);
+		}
 	}
 	else {
 		//rozmnazanie

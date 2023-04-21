@@ -15,7 +15,7 @@ World::World(int xSize, int ySize) : roundCounter(NULL), boardSizeX(xSize), boar
 	createOrganisms<Wolf>();
 	createOrganisms<Sheep>();
 	createOrganisms<Fox>();
-	/*createOrganisms<Turtle>();*/
+	createOrganisms<Turtle>();
 	createOrganisms<Antelope>();
 	/*createOrganisms<Grass>();
 	createOrganisms<Dandelion>();
@@ -39,8 +39,17 @@ int World::randOrganismsAmount() {
 }
 void World::performRound() {
 	for (int i = 0; i < allOrganisms.size(); i++) {
-		allOrganisms[i]->action();
-		allOrganisms[i]->incrementAgeCounter();
+		if (allOrganisms[i]->checkIfAlive()) {
+			allOrganisms[i]->action();
+			allOrganisms[i]->incrementAgeCounter();
+		}
+	}
+	for (int i = allOrganisms.size() - 1; i >= 0; i--) {
+		if (!allOrganisms[i]->checkIfAlive()) {
+			Organism* tmp = allOrganisms[i];
+			allOrganisms.erase(allOrganisms.begin() + i);
+			delete tmp;
+		}
 	}
 }
 char World::getImageXY(int x, int y) const {
@@ -156,15 +165,6 @@ Human* World::getHuman() {
 }
 void World::addOrganism(Organism* newOrganism) {
 	allOrganisms.insert(allOrganisms.begin(), newOrganism);
-}
-void World::killOrganismFromXY(int xPosition, int yPosition) {
-	Organism* toKill = &getOrganismFromXY(xPosition, yPosition);
-	for (int i = 0; i < allOrganisms.size(); i++) {
-		if (allOrganisms[i] == toKill) {
-			allOrganisms.erase(allOrganisms.begin() + i);
-		}
-	}
-	delete toKill;
 }
 void World::sortOrganisms() {
 	int i = 0;

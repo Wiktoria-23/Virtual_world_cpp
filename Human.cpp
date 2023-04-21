@@ -13,7 +13,7 @@ void Human::action() {
 	}
 	moveDirection = (direction)NONE;
 }
-void Human::collision(Organism* collidingOrganism) const {
+void Human::collision(Organism* collidingOrganism) {
 	if (superpowerActive) {
 
 	}

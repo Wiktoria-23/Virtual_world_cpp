@@ -7,7 +7,7 @@ Organism* Guarana::createChild(int xPosition, int yPosition) const {
 	Organism* newGuarana = new Guarana(xPosition, yPosition, currentWorld);
 	return newGuarana;
 }
-void Guarana::collision(Organism* collidingOrganism) const {
+void Guarana::collision(Organism* collidingOrganism) {
 	//makes animal stronger
 }
 Guarana::~Guarana() {

@@ -11,20 +11,20 @@ Organism* SosnowskyHogweed::createChild(int xPosition, int yPosition) const {
 }
 void SosnowskyHogweed::action() {
 	if (currentWorld->checkFieldXY(x - 1, y) && currentWorld->checkIfAnimal(x - 1, y)) {
-		currentWorld->killOrganismFromXY(x - 1, y);
+		currentWorld->getOrganismFromXY(x - 1, y).setDeadState();
 	}
 	if (currentWorld->checkFieldXY(x + 1, y) && currentWorld->checkIfAnimal(x + 1, y)) {
-		currentWorld->killOrganismFromXY(x + 1, y);
+		currentWorld->getOrganismFromXY(x + 1, y).setDeadState();
 	}
 	if (currentWorld->checkFieldXY(x, y - 1) && currentWorld->checkIfAnimal(x, y - 1)) {
-		currentWorld->killOrganismFromXY(x, y - 1);
+		currentWorld->getOrganismFromXY(x, y - 1).setDeadState();
 	}
 	if (currentWorld->checkFieldXY(x, y + 1) && currentWorld->checkIfAnimal(x, y + 1)) {
-		currentWorld->killOrganismFromXY(x, y + 1);
+		currentWorld->getOrganismFromXY(x, y + 1).setDeadState();
 	}
 	grow();
 }
-void SosnowskyHogweed::collision(Organism* collidingOrganism) const {
+void SosnowskyHogweed::collision(Organism* collidingOrganism) {
 
 }
 SosnowskyHogweed::~SosnowskyHogweed() {

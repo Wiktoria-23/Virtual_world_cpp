@@ -15,7 +15,7 @@ Organism* Turtle::createChild(int xPosition, int yPosition) const {
 	Organism* newTurtle = new Turtle(xPosition, yPosition, currentWorld);
 	return newTurtle;
 }
-void Turtle::collision(Organism* collidingOrganism) const {
+void Turtle::collision(Organism* collidingOrganism) {
 	if (collidingOrganism->getStrength() < 5 && currentWorld->checkIfAnimal(collidingOrganism->getX(), collidingOrganism->getY())) {
 		Animal* collidingAnimal = dynamic_cast<Animal*>(collidingOrganism);
 		if (collidingAnimal->getMoveDirection() == UP) {
@@ -34,6 +34,12 @@ void Turtle::collision(Organism* collidingOrganism) const {
 			collidingAnimal->setMoveDirection(moveDirection);
 		}
 		collidingAnimal->action();
+	}
+	else {
+		baseFight(collidingOrganism);
+		if (collidingOrganism->checkIfAlive()) {
+			collidingOrganism->collision(this);
+		}
 	}
 }
 Turtle::~Turtle() {

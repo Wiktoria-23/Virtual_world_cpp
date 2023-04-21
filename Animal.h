@@ -1,5 +1,6 @@
 #ifndef ANIMAL_H
 #define ANIMAL_H
+#define BASE_ANIMAL_SPEED 1
 
 #pragma once
 #include "Organism.h"
@@ -7,12 +8,12 @@
 
 class Animal : public Organism {
 protected:
-	int speed = 1;
+	int speed = BASE_ANIMAL_SPEED;
 	direction moveDirection;
 public:
 	Animal(int xPosition, int yPosition, World* newWorld);
 	virtual void action() override;
-	virtual void collision(Organism* collidingOrganism) const override;
+	virtual void collision(Organism* collidingOrganism) override;
 	void setMoveDirection(direction newMoveDirection);
 	void baseMovement();
 	bool checkMove(direction moveDirection);

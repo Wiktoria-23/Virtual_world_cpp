@@ -7,6 +7,6 @@ class Nightshade : public Plant {
 public:
 	Nightshade(int xPosition, int yPosition, World* newWorld);
 	Organism* createChild(int xPosition, int yPosition) const override;
-	void collision(Organism* collidingOrganism) const override;
+	void collision(Organism* collidingOrganism) override;
 	~Nightshade();
 };
