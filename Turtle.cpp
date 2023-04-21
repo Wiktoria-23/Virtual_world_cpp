@@ -1,9 +1,9 @@
 #include "Turtle.h"
 
 Turtle::Turtle(int xPosition, int yPosition, World* newWorld) : Animal(xPosition, yPosition, newWorld) {
-	strength = 2;
-	initiative = 1;
-	image = 'Z';
+	strength = TURTLE_STRENGTH;
+	initiative = TURTLE_INITIATIVE;
+	image = TURTLE_IMAGE;
 }
 void Turtle::action() {
 	int chanceToMove = rand() % 4;
@@ -11,7 +11,11 @@ void Turtle::action() {
 		Animal::action();
 	}
 }
-void Turtle::collision() {
+Organism* Turtle::createChild(int xPosition, int yPosition) const {
+	Organism* newTurtle = new Turtle(xPosition, yPosition, currentWorld);
+	return newTurtle;
+}
+void Turtle::collision(Organism* collidingOrganism) const {
 	
 }
 Turtle::~Turtle() {

@@ -2,12 +2,13 @@
 #include "Organism.h"
 
 Plant::Plant(int xPosition, int yPosition, World* newWorld) : Organism(xPosition, yPosition, newWorld) {
-	initiative = 0;
+	initiative = BASE_INITIATIVE;
+	strength = BASE_STRENGTH;
 }
 void Plant::action() {
 	grow();
 }
-void Plant::collision() {
+void Plant::collision(Organism* collidingOrganism) const {
 
 }
 bool Plant::checkPossibilityToGrow() const {
@@ -18,7 +19,7 @@ bool Plant::checkPossibilityToGrow() const {
 }
 void Plant::grow() const {
 	if (checkPossibilityToGrow()) {
-		int chanceToGrow = rand() % 5;
+		int chanceToGrow = rand() % GROW_CHANCE;
 		if (chanceToGrow == 0) {
 			while (true) {
 				direction growDirection = (direction)(rand() % 4);

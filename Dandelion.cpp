@@ -1,8 +1,7 @@
 #include "Dandelion.h"
 
 Dandelion::Dandelion(int xPosition, int yPosition, World* newWorld) : Plant(xPosition, yPosition, newWorld) {
-	strength = 0;
-	image = 'M';
+	image = DANDELION_IMAGE;
 }
 Organism* Dandelion::createChild(int xPosition, int yPosition) const {
 	Organism* newDandelion = new Dandelion(xPosition, yPosition, currentWorld);
@@ -12,6 +11,9 @@ void Dandelion::action() {
 	for (int i = 0; i < 3; i++) {
 		grow();
 	}
+}
+void Dandelion::collision(Organism* collidingOrganism) const {
+
 }
 Dandelion::~Dandelion() {
 

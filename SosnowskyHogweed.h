@@ -1,5 +1,7 @@
 #pragma once
 #include "Plant.h"
+#define SOSNOWSKY_HOGWEED_IMAGE 'B'
+#define SOSNOWSKY_HOGWEED_STRENGTH 10
 
 class SosnowskyHogweed : public Plant {
 public:
@@ -7,6 +9,6 @@ public:
 	Organism* createChild(int xPosition, int yPosition) const override;
 	bool checkIfAnimal(int xPosition, int yPosition);
 	void action() override;
-	void collision() override;
+	void collision(Organism* collidingOrganism) const override;
 	~SosnowskyHogweed();
 };

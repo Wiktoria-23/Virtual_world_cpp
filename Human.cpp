@@ -1,10 +1,10 @@
 #include "Human.h"
 
 Human::Human(int xPosition, int yPosition, World* newWorld) : Animal(xPosition, yPosition, newWorld) {
-	strength = 5;
-	initiative = 4;
+	strength = HUMAN_STRENGTH;
+	initiative = HUMAN_INITIATIVE;
 	superpowerActive = false;
-	image = 'C';
+	image = HUMAN_IMAGE;
 	moveDirection = (direction)NONE;
 }
 void Human::action() {
@@ -13,13 +13,16 @@ void Human::action() {
 	}
 	moveDirection = (direction)NONE;
 }
-void Human::collision() {
+void Human::collision(Organism* collidingOrganism) const {
 	if (superpowerActive) {
 
 	}
 	else {
 
 	}
+}
+Organism* Human::createChild(int xPosition, int yPosition) const {
+	return nullptr;
 }
 Human::~Human() {
 

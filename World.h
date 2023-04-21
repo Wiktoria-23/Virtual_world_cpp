@@ -1,10 +1,11 @@
 #pragma once
 #ifndef WORLD_H
 #define WORLD_H
-
+#include <Windows.h>
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
+#include <string>
 #define START_AMOUNT 3
 #define EMPTY '_'
 
@@ -23,11 +24,13 @@ private:
 	int roundCounter;
 	int boardSizeX;
 	int boardSizeY;
+	COORD cursorCoordinates;
+	vector<string*> allEventsInfo;
 	vector<Organism*> allOrganisms;
 public:
 	World(int xSize, int ySize);
 	int randOrganismsAmount();
-	void printWorld() const;
+	void printWorld();
 	void performRound();
 	int getRoundCounter() const;
 	void incrementRoundCounter();
@@ -41,6 +44,8 @@ public:
 	void addOrganism(Organism* newOrganism);
 	void killOrganismFromXY(int xPosition, int yPosition);
 	void sortOrganisms();
+	void setCursorPosition(int xPosition, int yPosition);
+	void addEventsInfo(string* newInfo);
 	~World();
 	template <typename T>
 	void createOrganisms() {

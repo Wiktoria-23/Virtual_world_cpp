@@ -2,6 +2,9 @@
 #define ORGANISM_H
 
 #pragma once
+#include <math.h>
+#include <windows.h>
+#include <conio.h>
 #include "World.h"
 
 enum direction {
@@ -30,9 +33,11 @@ public:
 	char getImage() const;
 	int getAge() const;
 	virtual void action() = 0;
-	virtual void collision(Organism* collidingOrganism) = 0;
+	virtual void collision(Organism* collidingOrganism) const = 0;
+	void baseFight(Organism* collidingOrganism) const;
 	void incrementAgeCounter();
-	/*virtual Organism* createChild(int xPosition, int yPosition) const = 0;*/
+	Organism* getCollision(direction moveDirection);
+	virtual Organism* createChild(int xPosition, int yPosition) const = 0;
 	virtual ~Organism();
 };
 

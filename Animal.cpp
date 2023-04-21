@@ -58,35 +58,17 @@ void Animal::action() {
 		}
 	}
 }
-void Animal::collision(Organism* collidingOrganism) {
-	//dodaj obs³ugê kolizji
+bool Animal::checkSameType(Organism* collidingOrganism) {
+	if (image == collidingOrganism->getImage()) {
+		return true;
+	}
+	return false;
 }
-Organism* Animal::getCollision(direction moveDirection) {
-	if (moveDirection == UP) {
-		if (currentWorld->checkFieldXY(x, y - 1)) {
-			Organism* collidingOrganism = &currentWorld->getOrganismFromXY(x, y - 1);
-			return collidingOrganism;
-		}
-	}
-	else if (moveDirection == DOWN) {
-		if (currentWorld->checkFieldXY(x, y + 1)) {
-			Organism* collidingOrganism = &currentWorld->getOrganismFromXY(x, y + 1);
-			return collidingOrganism;
-		}
-	}
-	else if (moveDirection == RIGHT) {
-		if (currentWorld->checkFieldXY(x + 1, y)) {
-			Organism* collidingOrganism = &currentWorld->getOrganismFromXY(x + 1, y);
-			return collidingOrganism;
-		}
-	}
-	else if (moveDirection == LEFT) {
-		if (currentWorld->checkFieldXY(x - 1, y)) {
-			Organism* collidingOrganism = &currentWorld->getOrganismFromXY(x - 1, y);
-			return collidingOrganism;
-		}
+void Animal::collision(Organism* collidingOrganism) const {
+	if (image != collidingOrganism->getImage()) {
+		baseFight(collidingOrganism);
 	}
 	else {
-		return nullptr;
+		//rozmnazanie
 	}
 }

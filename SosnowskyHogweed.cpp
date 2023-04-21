@@ -2,8 +2,8 @@
 #include "Animal.h"
 
 SosnowskyHogweed::SosnowskyHogweed(int xPosition, int yPosition, World* newWorld) : Plant(xPosition, yPosition, newWorld) {
-	strength = 10;
-	image = 'B';
+	strength = SOSNOWSKY_HOGWEED_STRENGTH;
+	image = SOSNOWSKY_HOGWEED_IMAGE;
 }
 Organism* SosnowskyHogweed::createChild(int xPosition, int yPosition) const {
 	Organism* newSosnowskyHogweed = new SosnowskyHogweed(xPosition, yPosition, currentWorld);
@@ -40,7 +40,7 @@ void SosnowskyHogweed::action() {
 	}
 	grow();
 }
-void SosnowskyHogweed::collision() {
+void SosnowskyHogweed::collision(Organism* collidingOrganism) const {
 
 }
 SosnowskyHogweed::~SosnowskyHogweed() {

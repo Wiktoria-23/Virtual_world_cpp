@@ -1,9 +1,13 @@
 #include "Fox.h"
 
 Fox::Fox(int xPosition, int yPosition, World* newWorld) : Animal(xPosition, yPosition, newWorld) {
-	strength = 3;
-	initiative = 7;
-	image = 'L';
+	strength = FOX_STRENGTH;
+	initiative = FOX_INITIATIVE;
+	image = FOX_IMAGE;
+}
+Organism* Fox::createChild(int xPosition, int yPosition) const {
+	Organism* newFox = new Fox(xPosition, yPosition, currentWorld);
+	return newFox;
 }
 bool Fox::checkField() {
 	if (moveDirection == LEFT) {

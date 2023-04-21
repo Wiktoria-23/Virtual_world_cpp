@@ -1,4 +1,3 @@
-#include <math.h>
 #include "Organism.h"
 #include "Wolf.h"
 #include "Sheep.h"
@@ -27,6 +26,11 @@ World::World(int xSize, int ySize) : roundCounter(NULL), boardSizeX(xSize), boar
 	Human* newHuman = new Human(newCoordinates.x, newCoordinates.y, this);
 	allOrganisms.push_back(newHuman);
 	sortOrganisms();
+	string* info = new string("Stworzono wszystkie organizmy");
+	allEventsInfo.push_back(info);
+}
+void World::addEventsInfo(string* newInfo) {
+	//napisz funkcjê
 }
 int World::randOrganismsAmount() {
 	float field = boardSizeX * boardSizeY;
@@ -73,7 +77,7 @@ Organism& World::getOrganismFromXY(int x, int y) {
 		}
 	}
 }
-void World::printWorld() const {
+void World::printWorld() {
 	system("cls");
 	cout << "Wiktoria Kubacka 193370" << endl << endl;
 	for (int x = 0; x < boardSizeX; x++) {
@@ -88,6 +92,17 @@ void World::printWorld() const {
 		cout << '|' << endl;
 	}
 	cout << endl;
+	int yPosition = 2;
+	for (int i = 0; i < allEventsInfo.size(); i++) {
+		if (!allEventsInfo[i]->empty()) {
+			setCursorPosition(2 * boardSizeX + 5, 2 + yPosition);
+			yPosition += 1;
+			cout << *allEventsInfo[i];
+		}
+	}
+	for (int i = 0; i < allEventsInfo.size(); i++) {
+		allEventsInfo[i]->clear();
+	}
 }
 int World::getRoundCounter() const {
 	return roundCounter;
@@ -146,6 +161,11 @@ void World::sortOrganisms() {
 		allOrganisms.erase(allOrganisms.begin() + m + 1);
 		i++;
 	}
+}
+void World::setCursorPosition(int xPosition, int yPosition) {
+	cursorCoordinates.X = xPosition;
+	cursorCoordinates.Y = yPosition;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorCoordinates);
 }
 World::~World() {
 

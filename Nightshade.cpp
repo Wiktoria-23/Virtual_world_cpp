@@ -1,14 +1,14 @@
 #include "Nightshade.h"
 
 Nightshade::Nightshade(int xPosition, int yPosition, World* newWorld) : Plant(xPosition, yPosition, newWorld) {
-	strength = 99;
-	image = 'J';
+	strength = NIGHTSHADE_STRENGTH;
+	image = NIGHTSHADE_IMAGE;
 }
 Organism* Nightshade::createChild(int xPosition, int yPosition) const {
 	Organism* newNightshade = new Nightshade(xPosition, yPosition, currentWorld);
 	return newNightshade;
 }
-void Nightshade::collision() {
+void Nightshade::collision(Organism* collidingOrganism) const {
 	//kills an animal
 }
 Nightshade::~Nightshade() {
