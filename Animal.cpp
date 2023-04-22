@@ -50,16 +50,23 @@ void Animal::action() {
 		moveDirection = (direction)(rand() % 4);
 		if (checkMove(moveDirection)) {
 			Organism* collidingOrganism = getCollision(moveDirection);
-			baseMovement();
-			if (collidingOrganism != nullptr) {
+			if (collidingOrganism != nullptr && collidingOrganism->checkIfAlive()) {
 				collision(collidingOrganism);
+			}
+			else {
+				baseMovement();
 			}
 			break;
 		}
+		break;
 	}
 }
 direction Animal::getMoveDirection() {
 	return moveDirection;
+}
+void Animal::breed(int xPosition, int yPosition) {
+	Organism* newAnimal = createChild(xPosition, yPosition);
+	currentWorld->addOrganism(newAnimal);
 }
 bool Animal::checkSameType(Organism* collidingOrganism) {
 	if (image == collidingOrganism->getImage()) {
@@ -67,14 +74,45 @@ bool Animal::checkSameType(Organism* collidingOrganism) {
 	}
 	return false;
 }
-void Animal::collision(Organism* collidingOrganism) {
-	if (image != collidingOrganism->getImage()) {
-		baseFight(collidingOrganism);
-		if (collidingOrganism->checkIfAlive()) {
-			collidingOrganism->collision(this);
+void Animal::tryToBreed(Organism* collidingOrganism) {
+	if ((currentWorld->checkFieldXY(x, y - 1) && currentWorld->getOrganismFromXY(x, y - 1).getImage()) != image || (currentWorld->checkFieldXY(x, y + 1) && currentWorld->getOrganismFromXY(x, y + 1).getImage() != image) || (currentWorld->checkFieldXY(x - 1, y) && currentWorld->getOrganismFromXY(x - 1, y).getImage() != image) || (currentWorld->checkFieldXY(x + 1, y) && currentWorld->getOrganismFromXY(x + 1, y).getImage() != image)) {
+		while (true) {
+			direction breedDirection = (direction)(rand() % 4);
+			if (breedDirection == DOWN && y + 1 < currentWorld->getBoardSizeY() && y + 1 != collidingOrganism->getY()) {
+				if ((currentWorld->checkFieldXY(x, y + 1) && currentWorld->getOrganismFromXY(x, y + 1).getImage() != image) || !currentWorld->checkFieldXY(x, y + 1)) {
+					breed(x, y + 1);
+					break;
+				}
+			}
+			else if (breedDirection == UP && y - 1 >= 0 && y - 1 != collidingOrganism->getY()) {
+				if ((currentWorld->checkFieldXY(x, y - 1) && currentWorld->getOrganismFromXY(x, y - 1).getImage() != image) || !currentWorld->checkFieldXY(x, y - 1)) {
+					breed(x, y - 1);
+					break;
+				}
+			}
+			else if (breedDirection == RIGHT && x + 1 < currentWorld->getBoardSizeX() && x + 1 != collidingOrganism->getX()) {
+				if ((currentWorld->checkFieldXY(x + 1, y) && currentWorld->getOrganismFromXY(x + 1, y).getImage() != image) || !currentWorld->checkFieldXY(x + 1, y)) {
+					breed(x + 1, y);
+					break;
+				}
+			}
+			else if (breedDirection == LEFT && x - 1 >= 0 && x - 1 != collidingOrganism->getX()) {
+				if ((currentWorld->checkFieldXY(x - 1, y) && currentWorld->getOrganismFromXY(x - 1, y).getImage() != image) || !currentWorld->checkFieldXY(x - 1, y)) {
+					breed(x, y - 1);
+					break;
+				}
+			}
+			break;
 		}
 	}
-	else {
-		//rozmnazanie
+}
+void Animal::collision(Organism* collidingOrganism) {
+	if (image == collidingOrganism->getImage()) {
+		tryToBreed(collidingOrganism);
+		return;
 	}
+	else if (collidingOrganism->checkIfAlive() && collidingOrganism->getStrength() != strength) {
+		Organism::collision(collidingOrganism);
+	}
+	baseMovement();
 }

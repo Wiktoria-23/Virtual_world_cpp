@@ -37,6 +37,9 @@ int main() {
 				}
 			}
 		}
+		else if (character == 'x' && newWorld.getHuman()->canSuperpowerBeActivated()) {
+			newWorld.getHuman()->activateSuperpower();
+		}
 		else if (character == NEW_ROUND) {
 			newWorld.performRound();
 			newWorld.incrementRoundCounter();

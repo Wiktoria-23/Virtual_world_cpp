@@ -1,6 +1,7 @@
 #pragma once
 #include "Plant.h"
 #define GUARANA_IMAGE 'G'
+#define STRENGTH_INCREASE 3
 
 class Guarana : public Plant {
 public:

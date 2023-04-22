@@ -25,7 +25,8 @@ void SosnowskyHogweed::action() {
 	grow();
 }
 void SosnowskyHogweed::collision(Organism* collidingOrganism) {
-
+	setDeadState();
+	collidingOrganism->setDeadState();
 }
 SosnowskyHogweed::~SosnowskyHogweed() {
 

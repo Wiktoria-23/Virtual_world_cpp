@@ -12,9 +12,6 @@ void Dandelion::action() {
 		grow();
 	}
 }
-void Dandelion::collision(Organism* collidingOrganism) {
-
-}
 Dandelion::~Dandelion() {
 
 }

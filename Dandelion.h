@@ -7,6 +7,5 @@ public:
 	Dandelion(int xPosition, int yPosition, World* newWorld);
 	virtual Organism* createChild(int xPosition, int yPosition) const override;
 	void action() override;
-	void collision(Organism* collidingOrganism) override;
 	~Dandelion();
 };

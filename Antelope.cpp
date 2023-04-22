@@ -14,7 +14,7 @@ void Antelope::setSpeed(int newSpeed) {
 	speed = newSpeed;
 }
 void Antelope::collision(Organism* collidingOrganism) {
-	if (image != collidingOrganism->getImage()) {
+	if (collidingOrganism->checkIfAlive() && image != collidingOrganism->getImage()) {
 		int survive = rand() % 2;
 		if (survive == 0) {
 			if (currentWorld->checkFieldXY(x, y - 1) || currentWorld->checkFieldXY(x, y + 1) || currentWorld->checkFieldXY(x - 1, y) || currentWorld->checkFieldXY(x + 1, y)) {
@@ -24,16 +24,20 @@ void Antelope::collision(Organism* collidingOrganism) {
 					if (checkMove(moveDirection)) {
 						setMoveDirection(moveDirection);
 						baseMovement();
-						setSpeed(ANTELOPE_STRENGTH);
-						return;
+						setSpeed(ANTELOPE_SPEED);
+						break;
 					}
 				}
 			}
 		}
 		baseFight(collidingOrganism);
-		if (collidingOrganism->checkIfAlive()) {
+		if (collidingOrganism->checkIfAlive() && collidingOrganism->getStrength() != strength) {
 			collidingOrganism->collision(this);
 		}
+	}
+	else if (collidingOrganism->checkIfAlive() && collidingOrganism->getImage() == image) {
+		tryToBreed(collidingOrganism);
+		return;
 	}
 	
 }

@@ -3,29 +3,29 @@
 Organism::Organism(int xPosition, int yPosition, World* newWorld) : x(xPosition), y(yPosition), currentWorld(newWorld), age(NULL), alive(true) {
 }
 Organism* Organism::getCollision(direction moveDirection) {
+	Organism* collidingOrganism = nullptr;
 	if (moveDirection == UP) {
 		if (currentWorld->checkFieldXY(x, y - 1)) {
-			Organism* collidingOrganism = &currentWorld->getOrganismFromXY(x, y - 1);
-			return collidingOrganism;
+			collidingOrganism = &currentWorld->getOrganismFromXY(x, y - 1);
 		}
 	}
 	else if (moveDirection == DOWN) {
 		if (currentWorld->checkFieldXY(x, y + 1)) {
-			Organism* collidingOrganism = &currentWorld->getOrganismFromXY(x, y + 1);
-			return collidingOrganism;
+			collidingOrganism = &currentWorld->getOrganismFromXY(x, y + 1);
 		}
 	}
 	else if (moveDirection == RIGHT) {
 		if (currentWorld->checkFieldXY(x + 1, y)) {
-			Organism* collidingOrganism = &currentWorld->getOrganismFromXY(x + 1, y);
-			return collidingOrganism;
+			collidingOrganism = &currentWorld->getOrganismFromXY(x + 1, y);
 		}
 	}
 	else if (moveDirection == LEFT) {
 		if (currentWorld->checkFieldXY(x - 1, y)) {
-			Organism* collidingOrganism = &currentWorld->getOrganismFromXY(x - 1, y);
-			return collidingOrganism;
+			collidingOrganism = &currentWorld->getOrganismFromXY(x - 1, y);
 		}
+	}
+	if (collidingOrganism != nullptr && collidingOrganism->checkIfAlive()) {
+		return collidingOrganism;
 	}
 	else {
 		return nullptr;
@@ -36,6 +36,23 @@ void Organism::setDeadState() {
 }
 bool Organism::checkIfAlive() {
 	return alive;
+}
+bool Organism::checkIfAnyMovePossible() {
+	if (!currentWorld->checkFieldXY(x - 1, y) || !currentWorld->checkFieldXY(x + 1, y) || !currentWorld->checkFieldXY(x, y - 1) || !currentWorld->checkFieldXY(x, y + 1)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+void Organism::increaseStrength(int amount) {
+	strength += amount;
+}
+void Organism::collision(Organism* collidingOrganism) {
+	baseFight(collidingOrganism);
+	if (collidingOrganism->checkIfAlive()) {
+		collidingOrganism->collision(this);
+	}
 }
 void Organism::baseFight(Organism* collidingOrganism) {
 	if (collidingOrganism->strength > strength) {
@@ -54,7 +71,9 @@ void Organism::baseFight(Organism* collidingOrganism) {
 		_itoa(getY(), tmpY, 10);
 		string* y = new string(tmpY);
 		info->append(*y);
-		info->append(" zostal zabity.");
+		info->append(" zostal zabity przez ");
+		img[0] = collidingOrganism->getImage();
+		info->append(img);
 		currentWorld->addEventsInfo(info);
 		setDeadState();
 	}

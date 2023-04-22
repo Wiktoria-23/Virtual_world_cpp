@@ -19,7 +19,8 @@ public:
 	bool checkMove(direction moveDirection);
 	bool checkSameType(Organism* collidingOrganism);
 	direction getMoveDirection();
-	/*virtual void breed();*/ //napisac rozmnazanie
+	virtual void breed(int xPosition, int yPosition); //napisac rozmnazanie
+	void tryToBreed(Organism* collidingOrganism);
 	virtual Organism* createChild(int xPosition, int yPosition) const override = 0;
 };
 

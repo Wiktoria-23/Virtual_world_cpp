@@ -43,14 +43,6 @@ bool Fox::checkField(direction moveDirection) {
 		return true;
 	}
 }
-bool Fox::checkIfAnyMovePossible() {
-	if (!currentWorld->checkFieldXY(x - 1, y) || !currentWorld->checkFieldXY(x + 1, y) || !currentWorld->checkFieldXY(x, y - 1) || !currentWorld->checkFieldXY(x, y + 1)) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
 void Fox::action() {
 	if (checkIfAnyMovePossible()) {
 		direction moveDirection;

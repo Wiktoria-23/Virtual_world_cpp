@@ -34,13 +34,15 @@ public:
 	char getImage() const;
 	int getAge() const;
 	virtual void action() = 0;
-	virtual void collision(Organism* collidingOrganism) = 0;
+	virtual void collision(Organism* collidingOrganism);
 	void baseFight(Organism* collidingOrganism);
 	void incrementAgeCounter();
 	Organism* getCollision(direction moveDirection);
 	void setDeadState();
 	bool checkIfAlive();
+	void increaseStrength(int amount);
 	/*string& createDeathInfo();*/
+	bool checkIfAnyMovePossible();
 	virtual Organism* createChild(int xPosition, int yPosition) const = 0;
 	virtual ~Organism();
 };

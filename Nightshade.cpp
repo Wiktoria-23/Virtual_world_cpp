@@ -9,7 +9,8 @@ Organism* Nightshade::createChild(int xPosition, int yPosition) const {
 	return newNightshade;
 }
 void Nightshade::collision(Organism* collidingOrganism) {
-	//kills an animal
+	setDeadState();
+	collidingOrganism->setDeadState();
 }
 Nightshade::~Nightshade() {
 

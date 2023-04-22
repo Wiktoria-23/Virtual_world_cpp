@@ -7,9 +7,6 @@ Organism* Grass::createChild(int xPosition, int yPosition) const {
 	Organism* newGrass = new Grass(xPosition, yPosition, this->currentWorld);
 	return newGrass;
 }
-void Grass::collision(Organism* collidingOrganism) {
-
-}
 Grass::~Grass() {
 
 }

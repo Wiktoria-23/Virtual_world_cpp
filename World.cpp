@@ -12,23 +12,25 @@
 #include "Human.h"
 
 World::World(int xSize, int ySize) : roundCounter(NULL), boardSizeX(xSize), boardSizeY(ySize) {
-	createOrganisms<Wolf>();
-	createOrganisms<Sheep>();
-	createOrganisms<Fox>();
-	createOrganisms<Turtle>();
-	createOrganisms<Antelope>();
-	/*createOrganisms<Grass>();
+	for (int i = 0; i < 2; i++) {
+		createOrganisms<Sheep>();
+		createOrganisms<Wolf>();
+		createOrganisms<Fox>();
+		createOrganisms<Turtle>();
+		createOrganisms<Antelope>();
+	}
+	createOrganisms<Grass>();
 	createOrganisms<Dandelion>();
 	createOrganisms<Guarana>();
 	createOrganisms<Nightshade>();
-	createOrganisms<SosnowskyHogweed>();*/
+	createOrganisms<SosnowskyHogweed>();
 	coordinates newCoordinates = *getRandomEmptyField();
 	Human* newHuman = new Human(newCoordinates.x, newCoordinates.y, this);
 	allOrganisms.push_back(newHuman);
 	sortOrganisms();
 	string* info = new string("Stworzono wszystkie organizmy");
 	addEventsInfo(info);
-}//napisz rozmna¿anie, komunikaty, kolizje specjalne dla gatunków i specjaln¹ umiejêtnoœæ cz³owieka + zapis
+}
 void World::addEventsInfo(string* newInfo) {
 	allEventsInfo.push_back(newInfo);
 }
@@ -47,7 +49,7 @@ void World::performRound() {
 	for (int i = allOrganisms.size() - 1; i >= 0; i--) {
 		if (!allOrganisms[i]->checkIfAlive()) {
 			Organism* tmp = allOrganisms[i];
-			allOrganisms.erase(allOrganisms.begin() + i);
+			allOrganisms.erase(allOrganisms.begin() + i);//dodaæ informacjê o œmierci tutaj
 			delete tmp;
 		}
 	}
@@ -62,9 +64,9 @@ char World::getImageXY(int x, int y) const {
 	return EMPTY;
 }
 bool World::checkFieldXY(int x, int y) const {
-	if (x < 0 || x >= getBoardSizeX() || y < 0 || y >= getBoardSizeY()) {//if field is out of border it is treated as occupied
-		return false;
-	}
+	//if (x < 0 || x >= getBoardSizeX() || y < 0 || y >= getBoardSizeY()) {//if field is out of border it is treated as occupied
+	//	return false;
+	//}
 	int organismsAmount = allOrganisms.size();
 	for (int i = 0; i < organismsAmount; i++) {
 		if (allOrganisms[i]->getX() == x && allOrganisms[i]->getY() == y) {
@@ -122,10 +124,10 @@ void World::printWorld() {
 	}
 	cout << endl;
 	int yPosition = 2;
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < boardSizeY; i++) {
 		setCursorPosition(2 * boardSizeX + 5, 2 + yPosition);
 		yPosition += 1;
-		cout << "                                                 ";
+		cout << "                                                           ";
 	}
 	yPosition = 2;
 	for (int i = 0; i < allEventsInfo.size(); i++) {
