@@ -10,8 +10,11 @@ Organism* Guarana::createChild(int xPosition, int yPosition) const {
 void Guarana::collision(Organism* collidingOrganism) {
 	if (currentWorld->checkIfAnimal(collidingOrganism->getX(), collidingOrganism->getY())) {
 		collidingOrganism->increaseStrength(STRENGTH_INCREASE);
+		setDeadState();
 	}
-	Organism::collision(collidingOrganism);
+	else {
+		Organism::collision(collidingOrganism);
+	}
 }
 Guarana::~Guarana() {
 

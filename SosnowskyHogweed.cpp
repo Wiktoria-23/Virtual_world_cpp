@@ -12,15 +12,19 @@ Organism* SosnowskyHogweed::createChild(int xPosition, int yPosition) const {
 void SosnowskyHogweed::action() {
 	if (currentWorld->checkFieldXY(x - 1, y) && currentWorld->checkIfAnimal(x - 1, y)) {
 		currentWorld->getOrganismFromXY(x - 1, y).setDeadState();
+		currentWorld->addDeathInfo(currentWorld->getOrganismFromXY(x - 1, y), *this);
 	}
 	if (currentWorld->checkFieldXY(x + 1, y) && currentWorld->checkIfAnimal(x + 1, y)) {
 		currentWorld->getOrganismFromXY(x + 1, y).setDeadState();
+		currentWorld->addDeathInfo(currentWorld->getOrganismFromXY(x + 1, y), *this);
 	}
 	if (currentWorld->checkFieldXY(x, y - 1) && currentWorld->checkIfAnimal(x, y - 1)) {
 		currentWorld->getOrganismFromXY(x, y - 1).setDeadState();
+		currentWorld->addDeathInfo(currentWorld->getOrganismFromXY(x, y - 1), *this);
 	}
 	if (currentWorld->checkFieldXY(x, y + 1) && currentWorld->checkIfAnimal(x, y + 1)) {
 		currentWorld->getOrganismFromXY(x, y + 1).setDeadState();
+		currentWorld->addDeathInfo(currentWorld->getOrganismFromXY(x, y + 1), *this);
 	}
 	grow();
 }

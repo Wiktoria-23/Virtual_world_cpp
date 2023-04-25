@@ -16,6 +16,6 @@ public:
 	virtual void action() override;
 	virtual Organism* createChild(int xPosition, int yPosition) const = 0;
 	bool checkPossibilityToGrow() const;
-	virtual void grow() const;
+	void grow() const;
 	~Plant();
 };

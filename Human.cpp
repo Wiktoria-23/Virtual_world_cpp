@@ -9,11 +9,23 @@ Human::Human(int xPosition, int yPosition, World* newWorld) : Animal(xPosition, 
 	moveDirection = (direction)NONE;
 }
 void Human::action() {
-	if (roundCounter == 0 && superpowerActive) {
-		superpowerActive = false;
-		roundCounter = 5;
+	if (superpowerActive) {
+		string* info = new string("Super umiejetnosc czlowieka aktywna");
+		currentWorld->addEventsInfo(info);
+		if (roundCounter == 0) {
+			superpowerActive = false;
+			roundCounter = 5;
+		}
+	}
+	else {
+		string* info = new string("Super umiejetnosc czlowieka nie aktywna");
+		currentWorld->addEventsInfo(info);
 	}
 	if (moveDirection != NONE && checkMove(moveDirection)) {
+		Organism* collidingOrganism = getCollision(moveDirection);
+		if (collidingOrganism != nullptr && collidingOrganism->checkIfAlive()) {
+			collision(collidingOrganism);
+		}
 		baseMovement();
 	}
 	moveDirection = (direction)NONE;
@@ -34,8 +46,16 @@ void Human::collision(Organism* collidingOrganism) {
 			baseMovement();
 	}
 	else {
-		Animal::collision(collidingOrganism);
+		Organism::collision(collidingOrganism);
 	}
+}
+void Human::setDeadState() {
+	if (superpowerActive == false) {
+		alive = false;
+	}
+}
+bool Human::superpowerState() {
+	return superpowerActive;
 }
 void Human::activateSuperpower() {
 	roundCounter = 5;

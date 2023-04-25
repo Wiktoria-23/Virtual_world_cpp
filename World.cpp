@@ -12,21 +12,20 @@
 #include "Human.h"
 
 World::World(int xSize, int ySize) : roundCounter(NULL), boardSizeX(xSize), boardSizeY(ySize) {
-	for (int i = 0; i < 2; i++) {
-		createOrganisms<Sheep>();
-		createOrganisms<Wolf>();
-		createOrganisms<Fox>();
-		createOrganisms<Turtle>();
-		createOrganisms<Antelope>();
+	int amount = countOrganismsAmount();
+	for (int i = 0; i < amount; i++) {
+		createOrganism<Wolf>();
+		createOrganism<Sheep>();
+		createOrganism<Fox>();
+		createOrganism<Turtle>();
+		createOrganism<Antelope>();
+		createOrganism<Grass>();
+		createOrganism<Dandelion>();
+		createOrganism<Guarana>();
+		createOrganism<Nightshade>();
+		createOrganism<SosnowskyHogweed>();
 	}
-	createOrganisms<Grass>();
-	createOrganisms<Dandelion>();
-	createOrganisms<Guarana>();
-	createOrganisms<Nightshade>();
-	createOrganisms<SosnowskyHogweed>();
-	coordinates newCoordinates = *getRandomEmptyField();
-	Human* newHuman = new Human(newCoordinates.x, newCoordinates.y, this);
-	allOrganisms.push_back(newHuman);
+	createOrganism<Human>();
 	sortOrganisms();
 	string* info = new string("Stworzono wszystkie organizmy");
 	addEventsInfo(info);
@@ -34,10 +33,10 @@ World::World(int xSize, int ySize) : roundCounter(NULL), boardSizeX(xSize), boar
 void World::addEventsInfo(string* newInfo) {
 	allEventsInfo.push_back(newInfo);
 }
-int World::randOrganismsAmount() {
+int World::countOrganismsAmount() {
 	float field = boardSizeX * boardSizeY;
-	int maxOccupied = ceil(field / 100 * 3); // setting maxOccupied field by organism type to 3% of whole field
-	return rand() % maxOccupied + 1; //cannot return 0
+	int maxOccupied = ceil(field / 100 * 2); // setting maxOccupied field by organism type to 2% of whole field
+	return maxOccupied + 1;
 }
 void World::performRound() {
 	for (int i = 0; i < allOrganisms.size(); i++) {
@@ -49,8 +48,17 @@ void World::performRound() {
 	for (int i = allOrganisms.size() - 1; i >= 0; i--) {
 		if (!allOrganisms[i]->checkIfAlive()) {
 			Organism* tmp = allOrganisms[i];
-			allOrganisms.erase(allOrganisms.begin() + i);//dodaæ informacjê o œmierci tutaj
-			delete tmp;
+			if (allOrganisms[i]->getImage() == HUMAN_IMAGE) {
+				Human* humanPointer = dynamic_cast<Human*>(allOrganisms[i]);
+				if (!humanPointer->superpowerState()) {
+					allOrganisms.erase(allOrganisms.begin() + i);
+					delete tmp;
+				}
+			}
+			else {
+				allOrganisms.erase(allOrganisms.begin() + i);
+				delete tmp;
+			}
 		}
 	}
 }
@@ -64,9 +72,6 @@ char World::getImageXY(int x, int y) const {
 	return EMPTY;
 }
 bool World::checkFieldXY(int x, int y) const {
-	//if (x < 0 || x >= getBoardSizeX() || y < 0 || y >= getBoardSizeY()) {//if field is out of border it is treated as occupied
-	//	return false;
-	//}
 	int organismsAmount = allOrganisms.size();
 	for (int i = 0; i < organismsAmount; i++) {
 		if (allOrganisms[i]->getX() == x && allOrganisms[i]->getY() == y) {
@@ -74,6 +79,65 @@ bool World::checkFieldXY(int x, int y) const {
 		}
 	}
 	return false;
+}
+void World::addPlantGrowInfo(const Organism& parent) {
+	string* info = new string("Roslina ");
+	char* img = new char[2];
+	img[0] = parent.getImage();
+	img[1] = '\0';
+	info->append(img);
+	info->append(" o wspolrzednych: ");
+	char* tmpX = new char[2];
+	_itoa(parent.getX(), tmpX, 10);
+	string* x = new string(tmpX);
+	info->append(*x);
+	info->append(", ");
+	char* tmpY = new char[2];
+	_itoa(parent.getY(), tmpY, 10);
+	string* y = new string(tmpY);
+	info->append(*y);
+	info->append(" rozrosla sie");
+	addEventsInfo(info);
+}
+void World::addAnimalBreedInfo(const Organism& parent) {
+	string* info = new string("Zwierze ");
+	char* img = new char[2];
+	img[0] = parent.getImage();
+	img[1] = '\0';
+	info->append(img);
+	info->append(" o wspolrzednych: ");
+	char* tmpX = new char[2];
+	_itoa(parent.getX(), tmpX, 10);
+	string* x = new string(tmpX);
+	info->append(*x);
+	info->append(", ");
+	char* tmpY = new char[2];
+	_itoa(parent.getY(), tmpY, 10);
+	string* y = new string(tmpY);
+	info->append(*y);
+	info->append(" rozmozylo sie");
+	addEventsInfo(info);
+}
+void World::addDeathInfo(const Organism& deadOrganism, const Organism& killingOrganism) {
+	string* info = new string("Organizm ");
+	char* img = new char[2];
+	img[0] = deadOrganism.getImage();
+	img[1] = '\0';
+	info->append(img);
+	info->append(" o wspolrzednych: ");
+	char* tmpX = new char[2];
+	_itoa(deadOrganism.getX(), tmpX, 10);
+	string* x = new string(tmpX);
+	info->append(*x);
+	info->append(", ");
+	char* tmpY = new char[2];
+	_itoa(deadOrganism.getY(), tmpY, 10);
+	string* y = new string(tmpY);
+	info->append(*y);
+	info->append(" zostal zabity przez ");
+	img[0] = killingOrganism.getImage();
+	info->append(img);
+	addEventsInfo(info);
 }
 int World::getBoardSizeX() const {
 	return boardSizeX;
@@ -115,7 +179,7 @@ void World::printWorld() {
 	}
 	cout << endl;
 	for (int y = 0; y < boardSizeY; y++) {
-		for (int x = 0; x < boardSizeY; x++) {
+		for (int x = 0; x < boardSizeX; x++) {
 			setCursorPosition(x * 2, y + 4);
 			cout << "|";
 			cout << getImageXY(x, y);
@@ -130,7 +194,7 @@ void World::printWorld() {
 		cout << "                                                           ";
 	}
 	yPosition = 2;
-	for (int i = 0; i < allEventsInfo.size(); i++) {
+	for (int i = 0; i < boardSizeY && i < allEventsInfo.size(); i++) {
 		if (!allEventsInfo[i]->empty()) {
 			setCursorPosition(2 * boardSizeX + 5, 2 + yPosition);
 			yPosition += 1;

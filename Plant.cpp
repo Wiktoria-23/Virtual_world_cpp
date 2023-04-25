@@ -18,33 +18,26 @@ void Plant::grow() const {
 	if (checkPossibilityToGrow()) {
 		int chanceToGrow = rand() % GROW_CHANCE;
 		if (chanceToGrow == 0) {
-			while (true) {
-				direction growDirection = (direction)(rand() % 4);
-				if (growDirection == UP) {
-					Organism* newPlant = createChild(x, y - 1);
-					currentWorld->addOrganism(newPlant);
-					/*string* info = new string("Roslina ");
-					char* type = new char(image);
-					info->append(type);*/
-					/*info->append()*///napisaæ funkcjê œwiata wyœwietlaj¹c¹ komunikaty
-					/*currentWorld->addEventsInfo(*/
-					break;
-				}
-				else if (growDirection == DOWN) {
-					Organism* newPlant = createChild(x, y + 1);
-					currentWorld->addOrganism(newPlant);
-					break;
-				}
-				else if (growDirection == RIGHT) {
-					Organism* newPlant = createChild(x + 1, y);
-					currentWorld->addOrganism(newPlant);
-					break;
-				}
-				else if (growDirection == LEFT) {
-					Organism* newPlant = createChild(x - 1, y);
-					currentWorld->addOrganism(newPlant);
-					break;
-				}
+			direction growDirection = (direction)(rand() % 4);
+			if (growDirection == UP && y - 1 >= 0) {
+				Organism* newPlant = createChild(x, y - 1);
+				currentWorld->addOrganism(newPlant);
+				currentWorld->addPlantGrowInfo(*this);
+			}
+			else if (growDirection == DOWN && y + 1 < currentWorld->getBoardSizeY()) {
+				Organism* newPlant = createChild(x, y + 1);
+				currentWorld->addOrganism(newPlant);
+				currentWorld->addPlantGrowInfo(*this);
+			}
+			else if (growDirection == RIGHT && x + 1 < currentWorld->getBoardSizeX()) {
+				Organism* newPlant = createChild(x + 1, y);
+				currentWorld->addOrganism(newPlant);
+				currentWorld->addPlantGrowInfo(*this);
+			}
+			else if (growDirection == LEFT && x - 1 >= 0) {
+				Organism* newPlant = createChild(x - 1, y);
+				currentWorld->addOrganism(newPlant);
+				currentWorld->addPlantGrowInfo(*this);
 			}
 		}
 	}

@@ -56,25 +56,7 @@ void Organism::collision(Organism* collidingOrganism) {
 }
 void Organism::baseFight(Organism* collidingOrganism) {
 	if (collidingOrganism->strength > strength) {
-		string* info = new string("Organizm ");
-		char* img = new char[1];
-		img[0] = getImage();
-		img[1] = '\0';
-		info->append(img);
-		info->append(" o wspolrzednych: ");
-		char* tmpX = new char[2];
-		_itoa(getX(), tmpX, 10);
-		string* x = new string(tmpX);
-		info->append(*x);
-		info->append(", ");
-		char* tmpY = new char[2];
-		_itoa(getY(), tmpY, 10);
-		string* y = new string(tmpY);
-		info->append(*y);
-		info->append(" zostal zabity przez ");
-		img[0] = collidingOrganism->getImage();
-		info->append(img);
-		currentWorld->addEventsInfo(info);
+		currentWorld->addDeathInfo(*this, *collidingOrganism);
 		setDeadState();
 	}
 }

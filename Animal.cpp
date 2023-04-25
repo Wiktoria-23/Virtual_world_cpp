@@ -76,33 +76,30 @@ bool Animal::checkSameType(Organism* collidingOrganism) {
 }
 void Animal::tryToBreed(Organism* collidingOrganism) {
 	if ((currentWorld->checkFieldXY(x, y - 1) && currentWorld->getOrganismFromXY(x, y - 1).getImage()) != image || (currentWorld->checkFieldXY(x, y + 1) && currentWorld->getOrganismFromXY(x, y + 1).getImage() != image) || (currentWorld->checkFieldXY(x - 1, y) && currentWorld->getOrganismFromXY(x - 1, y).getImage() != image) || (currentWorld->checkFieldXY(x + 1, y) && currentWorld->getOrganismFromXY(x + 1, y).getImage() != image)) {
-		while (true) {
-			direction breedDirection = (direction)(rand() % 4);
-			if (breedDirection == DOWN && y + 1 < currentWorld->getBoardSizeY() && y + 1 != collidingOrganism->getY()) {
-				if ((currentWorld->checkFieldXY(x, y + 1) && currentWorld->getOrganismFromXY(x, y + 1).getImage() != image) || !currentWorld->checkFieldXY(x, y + 1)) {
-					breed(x, y + 1);
-					break;
-				}
+		direction breedDirection = (direction)(rand() % 4);
+		if (breedDirection == DOWN && y + 1 < currentWorld->getBoardSizeY() && y + 1 != collidingOrganism->getY()) {
+			if ((currentWorld->checkFieldXY(x, y + 1) && currentWorld->getOrganismFromXY(x, y + 1).getImage() != image) || !currentWorld->checkFieldXY(x, y + 1)) {
+				breed(x, y + 1);
+				currentWorld->addAnimalBreedInfo(*this);
 			}
-			else if (breedDirection == UP && y - 1 >= 0 && y - 1 != collidingOrganism->getY()) {
-				if ((currentWorld->checkFieldXY(x, y - 1) && currentWorld->getOrganismFromXY(x, y - 1).getImage() != image) || !currentWorld->checkFieldXY(x, y - 1)) {
-					breed(x, y - 1);
-					break;
-				}
+		}
+		else if (breedDirection == UP && y - 1 >= 0 && y - 1 != collidingOrganism->getY()) {
+			if ((currentWorld->checkFieldXY(x, y - 1) && currentWorld->getOrganismFromXY(x, y - 1).getImage() != image) || !currentWorld->checkFieldXY(x, y - 1)) {
+				breed(x, y - 1);
+				currentWorld->addAnimalBreedInfo(*this);
 			}
-			else if (breedDirection == RIGHT && x + 1 < currentWorld->getBoardSizeX() && x + 1 != collidingOrganism->getX()) {
-				if ((currentWorld->checkFieldXY(x + 1, y) && currentWorld->getOrganismFromXY(x + 1, y).getImage() != image) || !currentWorld->checkFieldXY(x + 1, y)) {
-					breed(x + 1, y);
-					break;
-				}
+		}
+		else if (breedDirection == RIGHT && x + 1 < currentWorld->getBoardSizeX() && x + 1 != collidingOrganism->getX()) {
+			if ((currentWorld->checkFieldXY(x + 1, y) && currentWorld->getOrganismFromXY(x + 1, y).getImage() != image) || !currentWorld->checkFieldXY(x + 1, y)) {
+				breed(x + 1, y);
+				currentWorld->addAnimalBreedInfo(*this);
 			}
-			else if (breedDirection == LEFT && x - 1 >= 0 && x - 1 != collidingOrganism->getX()) {
-				if ((currentWorld->checkFieldXY(x - 1, y) && currentWorld->getOrganismFromXY(x - 1, y).getImage() != image) || !currentWorld->checkFieldXY(x - 1, y)) {
-					breed(x, y - 1);
-					break;
-				}
+		}
+		else if (breedDirection == LEFT && x - 1 >= 0 && x - 1 != collidingOrganism->getX()) {
+			if ((currentWorld->checkFieldXY(x - 1, y) && currentWorld->getOrganismFromXY(x - 1, y).getImage() != image) || !currentWorld->checkFieldXY(x - 1, y)) {
+				breed(x, y - 1);
+				currentWorld->addAnimalBreedInfo(*this);
 			}
-			break;
 		}
 	}
 }

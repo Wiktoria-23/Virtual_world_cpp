@@ -17,6 +17,8 @@ public:
 	void collision(Organism* collidingOrganism) override;
 	void activateSuperpower();
 	bool canSuperpowerBeActivated();
+	bool superpowerState();
+	void setDeadState() override;
 	Organism* createChild(int xPosition, int yPosition) const override;
 	~Human();
 };

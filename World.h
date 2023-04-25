@@ -30,7 +30,7 @@ private:
 	vector<Organism*> allOrganisms;
 public:
 	World(int xSize, int ySize);
-	int randOrganismsAmount();
+	int countOrganismsAmount();
 	void printWorld();
 	void performRound();
 	int getRoundCounter() const;
@@ -43,21 +43,18 @@ public:
 	Organism& getOrganismFromXY(int x, int y);
 	Human* getHuman();
 	void addOrganism(Organism* newOrganism);
+	void addPlantGrowInfo(const Organism& parent);
+	void addAnimalBreedInfo(const Organism& parent);
+	void addDeathInfo(const Organism& deadOrganism, const Organism& killingOrganism);
 	void sortOrganisms();
 	void setCursorPosition(int xPosition, int yPosition);
 	void addEventsInfo(string* newInfo);
 	bool checkIfAnimal(int xPosition, int yPosition);
 	~World();
 	template <typename T>
-	void createOrganisms() {
-		for (int i = 0; i < randOrganismsAmount(); i++) {
-			coordinates newCoordinates = *getRandomEmptyField();
-			createOrganism<T>(newCoordinates.x, newCoordinates.y);
-		}
-	}
-	template <typename T>
-	void createOrganism(int x, int y) {
-		T* newOrganism = new T(x, y, this);
+	void createOrganism() {
+		coordinates newCoordinates = *getRandomEmptyField();
+		T* newOrganism = new T(newCoordinates.x, newCoordinates.y, this);
 		allOrganisms.insert(allOrganisms.begin(), newOrganism);
 	}
 };

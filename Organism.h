@@ -38,10 +38,9 @@ public:
 	void baseFight(Organism* collidingOrganism);
 	void incrementAgeCounter();
 	Organism* getCollision(direction moveDirection);
-	void setDeadState();
+	virtual void setDeadState();
 	bool checkIfAlive();
 	void increaseStrength(int amount);
-	/*string& createDeathInfo();*/
 	bool checkIfAnyMovePossible();
 	virtual Organism* createChild(int xPosition, int yPosition) const = 0;
 	virtual ~Organism();
