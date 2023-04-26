@@ -16,11 +16,11 @@ public:
 	virtual void collision(Organism* collidingOrganism) override;
 	void setMoveDirection(direction newMoveDirection);
 	void baseMovement();
-	bool checkMove(direction moveDirection);
-	bool checkSameType(Organism* collidingOrganism);
+	bool checkMove(direction moveDirection) const;
+	bool checkSameType(Organism* collidingOrganism) const;
 	direction getMoveDirection();
-	virtual void breed(int xPosition, int yPosition);
-	void tryToBreed(Organism* collidingOrganism);
+	virtual void breed(int xPosition, int yPosition) const;
+	void tryToBreed(Organism* collidingOrganism) const;
 	virtual Organism* createChild(int xPosition, int yPosition) const override = 0;
 };
 

@@ -9,9 +9,12 @@ Organism* Fox::createChild(int xPosition, int yPosition) const {
 	Organism* newFox = new Fox(xPosition, yPosition, currentWorld);
 	return newFox;
 }
-bool Fox::checkField(direction moveDirection) {
+bool Fox::checkField(direction moveDirection) const {
 	if (moveDirection == LEFT) {
 		if (currentWorld->checkFieldXY(x - speed, y)) {
+			if (currentWorld->getOrganismFromXY(x - speed, y).getImage() == image) {
+				return true;
+			}
 			if (currentWorld->getOrganismFromXY(x - speed, y).getStrength() > strength) {
 				return false;
 			}
@@ -20,6 +23,9 @@ bool Fox::checkField(direction moveDirection) {
 	}
 	else if (moveDirection == RIGHT) {
 		if (currentWorld->checkFieldXY(x + speed, y)) {
+			if (currentWorld->getOrganismFromXY(x + speed, y).getImage() == image) {
+				return true;
+			}
 			if (currentWorld->getOrganismFromXY(x + speed, y).getStrength() > strength) {
 				return false;
 			}
@@ -28,6 +34,9 @@ bool Fox::checkField(direction moveDirection) {
 	}
 	else if (moveDirection == UP) {
 		if (currentWorld->checkFieldXY(x, y - speed)) {
+			if (currentWorld->getOrganismFromXY(x, y - speed).getImage() == image) {
+				return true;
+			}
 			if (currentWorld->getOrganismFromXY(x, y - speed).getStrength() > strength) {
 				return false;
 			}
@@ -36,6 +45,9 @@ bool Fox::checkField(direction moveDirection) {
 	}
 	else if (moveDirection == DOWN) {
 		if (currentWorld->checkFieldXY(x, y + speed)) {
+			if (currentWorld->getOrganismFromXY(x, y + speed).getImage() == image) {
+				return true;
+			}
 			if (currentWorld->getOrganismFromXY(x, y + speed).getStrength() > strength) {
 				return false;
 			}
@@ -43,7 +55,10 @@ bool Fox::checkField(direction moveDirection) {
 		return true;
 	}
 }
-bool Fox::checkIfAnyMovePossible() {
+bool Fox::checkIfAnyMovePossible() const {
+	if (x < 0 || x >= currentWorld->getBoardSizeX() || y < 0 || y >= currentWorld->getBoardSizeY()) {
+		return false;
+	}
 	if ((currentWorld->checkFieldXY(x - speed, y) && currentWorld->getOrganismFromXY(x - speed, y).getStrength() < strength) || (currentWorld->checkFieldXY(x + speed, y) && currentWorld->getOrganismFromXY(x + speed, y).getStrength() < strength) || (currentWorld->checkFieldXY(x, y - speed) && currentWorld->getOrganismFromXY(x, y - speed).getStrength() < strength) || (currentWorld->checkFieldXY(x, y + speed) && currentWorld->getOrganismFromXY(x, y + speed).getStrength() < strength)) {
 		return true;
 	}
@@ -54,16 +69,18 @@ bool Fox::checkIfAnyMovePossible() {
 }
 void Fox::action() {
 	if (checkIfAnyMovePossible()) {
-		direction moveDirection;
-		if (checkIfAnyMovePossible()) {
-			while (true) {
-				moveDirection = (direction)(rand() % 4);
-				if (checkMove(moveDirection)) {
-					if (checkField(moveDirection)) {
-						setMoveDirection(moveDirection);
-						baseMovement();
-						break;
+	direction moveDirection;
+		while (true) {
+			moveDirection = (direction)(rand() % 4);
+			if (checkMove(moveDirection)) {
+				if (checkField(moveDirection)) {
+					Organism* collidingOrganism = getCollision(moveDirection);
+					if (collidingOrganism != nullptr) {
+						collision(collidingOrganism);
 					}
+					setMoveDirection(moveDirection);
+					baseMovement();
+					break;
 				}
 			}
 		}

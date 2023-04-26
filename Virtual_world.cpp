@@ -7,14 +7,22 @@
 #define KEY_ARROW_DOWN 80
 #define KEY_ARROW_RIGHT 77
 #define KEY_ARROW_LEFT 75
+#define MIN_FIELD 100
+#define MAX_X 90
+#define MAX_Y 35
 
 using namespace std;
 
 int main() {
 	int x, y;
 	bool active = true;
-	cout << "Wprowadz wielkosc planszy (X,Y): ";
-	cin >> x >> y;
+	while (true) {
+		cout << "Wprowadz wielkosc planszy (X,Y): ";
+		cin >> x >> y;
+		if (x <= MAX_X && y <= MAX_Y && x * y >= MIN_FIELD) {
+			break;
+		}
+	}
 	World newWorld(x, y);
 	char character;
 	newWorld.printWorld();
@@ -45,6 +53,7 @@ int main() {
 			cout << "Podaj nazwe pliku, w ktorym chcesz zapisac stan: " << endl;
 			string filename;
 			cin >> filename;
+			newWorld.sortOrganisms();
 			newWorld.save(filename);
 			newWorld.printWorld();
 		}

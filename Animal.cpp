@@ -25,7 +25,7 @@ void Animal::setMoveDirection(direction newMoveDirection) {
 		moveDirection = (direction)NONE;
 	}
 }
-bool Animal::checkMove(direction newMoveDirection) {
+bool Animal::checkMove(direction newMoveDirection) const {
 	int tmpX = x;
 	int tmpY = y;
 	if (newMoveDirection == LEFT) {
@@ -64,17 +64,17 @@ void Animal::action() {
 direction Animal::getMoveDirection() {
 	return moveDirection;
 }
-void Animal::breed(int xPosition, int yPosition) {
+void Animal::breed(int xPosition, int yPosition) const {
 	Organism* newAnimal = createChild(xPosition, yPosition);
 	currentWorld->addOrganism(newAnimal);
 }
-bool Animal::checkSameType(Organism* collidingOrganism) {
+bool Animal::checkSameType(Organism* collidingOrganism) const {
 	if (image == collidingOrganism->getImage()) {
 		return true;
 	}
 	return false;
 }
-void Animal::tryToBreed(Organism* collidingOrganism) {
+void Animal::tryToBreed(Organism* collidingOrganism) const{
 	if ((currentWorld->checkFieldXY(x, y - 1) && currentWorld->getOrganismFromXY(x, y - 1).getImage()) != image || (currentWorld->checkFieldXY(x, y + 1) && currentWorld->getOrganismFromXY(x, y + 1).getImage() != image) || (currentWorld->checkFieldXY(x - 1, y) && currentWorld->getOrganismFromXY(x - 1, y).getImage() != image) || (currentWorld->checkFieldXY(x + 1, y) && currentWorld->getOrganismFromXY(x + 1, y).getImage() != image)) {
 		direction breedDirection = (direction)(rand() % 4);
 		if (breedDirection == DOWN && y + 1 < currentWorld->getBoardSizeY() && y + 1 != collidingOrganism->getY()) {
@@ -97,7 +97,7 @@ void Animal::tryToBreed(Organism* collidingOrganism) {
 		}
 		else if (breedDirection == LEFT && x - 1 >= 0 && x - 1 != collidingOrganism->getX()) {
 			if ((currentWorld->checkFieldXY(x - 1, y) && currentWorld->getOrganismFromXY(x - 1, y).getImage() != image && currentWorld->getOrganismFromXY(x - 1, y).getAge() > 0) || !currentWorld->checkFieldXY(x - 1, y)) {
-				breed(x, y - 1);
+				breed(x - 1, y);
 				currentWorld->addAnimalBreedInfo(*this);
 			}
 		}

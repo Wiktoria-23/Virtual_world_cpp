@@ -35,13 +35,13 @@ void Human::action() {
 		roundCounter -= 1;
 	}
 }
-bool Human::canSuperpowerBeActivated() {
+bool Human::canSuperpowerBeActivated() const {
 	if (roundCounter == 0 && !superpowerActive) {
 		return true;
 	}
 	return false;
 }
-int Human::getRoundCounter() {
+int Human::getRoundCounter() const {
 	return roundCounter;
 }
 void Human::collision(Organism* collidingOrganism) {
@@ -62,7 +62,7 @@ void Human::setDeadState() {
 		alive = false;
 	}
 }
-bool Human::superpowerState() {
+bool Human::superpowerState() const {
 	return superpowerActive;
 }
 void Human::activateSuperpower() {

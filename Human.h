@@ -16,9 +16,9 @@ public:
 	void action() override;
 	void collision(Organism* collidingOrganism) override;
 	void activateSuperpower();
-	bool canSuperpowerBeActivated();
-	bool superpowerState();
-	int getRoundCounter();
+	bool canSuperpowerBeActivated() const;
+	bool superpowerState() const;
+	int getRoundCounter() const;
 	void setDeadState() override;
 	void setRoundCounter(int newRoundCounter);
 	void setSuperpowerState(bool newSuperpowerState);

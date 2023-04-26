@@ -9,7 +9,7 @@ public:
 	Fox(int xPosition, int yPosition, World* newWorld);
 	Organism* createChild(int xPosition, int yPosition) const override;
 	void action() override;
-	bool checkIfAnyMovePossible();
-	bool checkField(direction moveDirection);
+	bool checkIfAnyMovePossible() const;
+	bool checkField(direction moveDirection) const;
 	~Fox();
 };

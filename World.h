@@ -34,7 +34,7 @@ private:
 	vector<Organism*> allOrganisms;
 public:
 	World(int xSize, int ySize);
-	int countOrganismsAmount();
+	int countOrganismsAmount() const;
 	void printWorld();
 	void performRound();
 	int getRoundCounter() const;
@@ -44,7 +44,7 @@ public:
 	bool checkFieldXY(int x, int y) const;
 	int getBoardSizeX() const;
 	int getBoardSizeY() const;
-	Organism& getOrganismFromXY(int x, int y);
+	Organism& getOrganismFromXY(int x, int y) const;
 	Human* getHuman();
 	void addOrganism(Organism* newOrganism);
 	void addPlantGrowInfo(const Organism& parent);
@@ -53,8 +53,8 @@ public:
 	void sortOrganisms();
 	void setCursorPosition(int xPosition, int yPosition);
 	void addEventsInfo(string& newInfo);
-	bool checkIfAnimal(int xPosition, int yPosition);
-	void save(string& filename);
+	bool checkIfAnimal(int xPosition, int yPosition) const;
+	void save(string& filename) const;
 	void loadFromFile(string& filename);
 	~World();
 	template <typename T>

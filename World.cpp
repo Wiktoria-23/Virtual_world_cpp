@@ -33,7 +33,7 @@ World::World(int xSize, int ySize) : roundCounter(NULL), boardSizeX(xSize), boar
 void World::addEventsInfo(string& newInfo) {
 	allEventsInfo.push_back(&newInfo);
 }
-int World::countOrganismsAmount() {
+int World::countOrganismsAmount() const {
 	float field = boardSizeX * boardSizeY;
 	int maxOccupied = ceil(field / 100 * 2); // setting maxOccupied field by organism type to 2% of whole field
 	return maxOccupied + 1;
@@ -147,14 +147,14 @@ int World::getBoardSizeX() const {
 int World::getBoardSizeY() const {
 	return boardSizeY;
 }
-Organism& World::getOrganismFromXY(int x, int y) {
+Organism& World::getOrganismFromXY(int x, int y) const {
 	for (int i = 0; i < allOrganisms.size(); i++) {
 		if (allOrganisms[i]->getX() == x && allOrganisms[i]->getY() == y) {
 			return *allOrganisms[i];
 		}
 	}
 }
-bool World::checkIfAnimal(int xPosition, int yPosition) {
+bool World::checkIfAnimal(int xPosition, int yPosition) const {
 	Organism* neighbourOrganism;
 	if (xPosition >= 0 && xPosition < boardSizeX && yPosition >= 0 && boardSizeY) {
 		if (checkFieldXY(xPosition, yPosition)) {
@@ -262,8 +262,7 @@ void World::setCursorPosition(int xPosition, int yPosition) {
 	cursorCoordinates.Y = yPosition;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorCoordinates);
 }
-void World::save(string& filename) {
-	this->sortOrganisms();
+void World::save(string& filename) const {
 	fstream file;
 	file.open(filename, fstream::out);
 	file << boardSizeX << endl;
