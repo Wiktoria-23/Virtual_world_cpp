@@ -31,6 +31,8 @@ void SosnowskyHogweed::action() {
 void SosnowskyHogweed::collision(Organism* collidingOrganism) {
 	setDeadState();
 	collidingOrganism->setDeadState();
+	currentWorld->addDeathInfo(*collidingOrganism, *this);
+	currentWorld->addDeathInfo(*this, *collidingOrganism);
 }
 SosnowskyHogweed::~SosnowskyHogweed() {
 

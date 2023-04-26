@@ -25,6 +25,18 @@ void Antelope::collision(Organism* collidingOrganism) {
 						setMoveDirection(moveDirection);
 						baseMovement();
 						setSpeed(ANTELOPE_SPEED);
+						string* info = new string("Antylopa o wspolrzednych: ");
+						char* tmpX = new char[2];
+						_itoa(x, tmpX, 10);
+						string* x = new string(tmpX);
+						info->append(*x);
+						info->append(", ");
+						char* tmpY = new char[2];
+						_itoa(y, tmpY, 10);
+						string* y = new string(tmpY);
+						info->append(*y);
+						info->append(" ucieka od ataku");
+						currentWorld->addEventsInfo(*info);
 						break;
 					}
 				}

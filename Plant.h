@@ -2,7 +2,7 @@
 #include "Organism.h"
 #define BASE_STRENGTH 0
 #define BASE_INITIATIVE 0
-#define GROW_CHANCE 30
+#define GROW_CHANCE 40
 
 class Grass;
 class Dandelion;

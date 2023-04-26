@@ -34,31 +34,35 @@ Organism* Organism::getCollision(direction moveDirection) {
 void Organism::setDeadState() {
 	alive = false;
 }
-bool Organism::checkIfAlive() {
+bool Organism::checkIfAlive() const {
 	return alive;
-}
-bool Organism::checkIfAnyMovePossible() {
-	if (!currentWorld->checkFieldXY(x - 1, y) || !currentWorld->checkFieldXY(x + 1, y) || !currentWorld->checkFieldXY(x, y - 1) || !currentWorld->checkFieldXY(x, y + 1)) {
-		return true;
-	}
-	else {
-		return false;
-	}
 }
 void Organism::increaseStrength(int amount) {
 	strength += amount;
 }
 void Organism::collision(Organism* collidingOrganism) {
 	baseFight(collidingOrganism);
-	if (collidingOrganism->checkIfAlive()) {
+	if (collidingOrganism->checkIfAlive() && alive) {
 		collidingOrganism->collision(this);
 	}
 }
 void Organism::baseFight(Organism* collidingOrganism) {
 	if (collidingOrganism->strength > strength) {
-		currentWorld->addDeathInfo(*this, *collidingOrganism);
 		setDeadState();
+		currentWorld->addDeathInfo(*this, *collidingOrganism);
 	}
+}
+void Organism::setStrength(int newStrength) {
+	strength = newStrength;
+}
+void Organism::setInitiative(int newInitiative) {
+	initiative = newInitiative;
+}
+void Organism::setAge(int newAge) {
+	age = newAge;
+}
+void Organism::setAliveState(bool newAlive) {
+	alive = newAlive;
 }
 int Organism::getStrength() const {
 	return strength;

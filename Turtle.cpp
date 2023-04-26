@@ -37,6 +37,18 @@ void Turtle::collision(Organism* collidingOrganism) {
 		else {
 			collidingAnimal->setMoveDirection(moveDirection);
 		}
+		string* info = new string("Zolw o wspolrzednych: ");
+		char* tmpX = new char[2];
+		_itoa(x, tmpX, 10);
+		string* x = new string(tmpX);
+		info->append(*x);
+		info->append(", ");
+		char* tmpY = new char[2];
+		_itoa(y, tmpY, 10);
+		string* y = new string(tmpY);
+		info->append(*y);
+		info->append(" odpiera atak");
+		currentWorld->addEventsInfo(*info);
 		collidingAnimal->action();
 	}
 	else {

@@ -18,7 +18,10 @@ public:
 	void activateSuperpower();
 	bool canSuperpowerBeActivated();
 	bool superpowerState();
+	int getRoundCounter();
 	void setDeadState() override;
+	void setRoundCounter(int newRoundCounter);
+	void setSuperpowerState(bool newSuperpowerState);
 	Organism* createChild(int xPosition, int yPosition) const override;
 	~Human();
 };

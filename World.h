@@ -5,10 +5,14 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #define START_AMOUNT 3
 #define EMPTY '_'
+#define BOARD_START_Y 5
+#define INFO_START_X 5
+#define NEW_LINE '\r'
 
 using namespace std;
 
@@ -48,8 +52,10 @@ public:
 	void addDeathInfo(const Organism& deadOrganism, const Organism& killingOrganism);
 	void sortOrganisms();
 	void setCursorPosition(int xPosition, int yPosition);
-	void addEventsInfo(string* newInfo);
+	void addEventsInfo(string& newInfo);
 	bool checkIfAnimal(int xPosition, int yPosition);
+	void save(string& filename);
+	void loadFromFile(string& filename);
 	~World();
 	template <typename T>
 	void createOrganism() {

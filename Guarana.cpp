@@ -11,6 +11,7 @@ void Guarana::collision(Organism* collidingOrganism) {
 	if (currentWorld->checkIfAnimal(collidingOrganism->getX(), collidingOrganism->getY())) {
 		collidingOrganism->increaseStrength(STRENGTH_INCREASE);
 		setDeadState();
+		currentWorld->addDeathInfo(*this, *collidingOrganism);
 	}
 	else {
 		Organism::collision(collidingOrganism);

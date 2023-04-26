@@ -14,10 +14,10 @@
 World::World(int xSize, int ySize) : roundCounter(NULL), boardSizeX(xSize), boardSizeY(ySize) {
 	int amount = countOrganismsAmount();
 	for (int i = 0; i < amount; i++) {
-		createOrganism<Wolf>();
 		createOrganism<Sheep>();
 		createOrganism<Fox>();
 		createOrganism<Turtle>();
+		createOrganism<Wolf>();
 		createOrganism<Antelope>();
 		createOrganism<Grass>();
 		createOrganism<Dandelion>();
@@ -28,10 +28,10 @@ World::World(int xSize, int ySize) : roundCounter(NULL), boardSizeX(xSize), boar
 	createOrganism<Human>();
 	sortOrganisms();
 	string* info = new string("Stworzono wszystkie organizmy");
-	addEventsInfo(info);
+	addEventsInfo(*info);
 }
-void World::addEventsInfo(string* newInfo) {
-	allEventsInfo.push_back(newInfo);
+void World::addEventsInfo(string& newInfo) {
+	allEventsInfo.push_back(&newInfo);
 }
 int World::countOrganismsAmount() {
 	float field = boardSizeX * boardSizeY;
@@ -97,7 +97,7 @@ void World::addPlantGrowInfo(const Organism& parent) {
 	string* y = new string(tmpY);
 	info->append(*y);
 	info->append(" rozrosla sie");
-	addEventsInfo(info);
+	addEventsInfo(*info);
 }
 void World::addAnimalBreedInfo(const Organism& parent) {
 	string* info = new string("Zwierze ");
@@ -116,28 +116,30 @@ void World::addAnimalBreedInfo(const Organism& parent) {
 	string* y = new string(tmpY);
 	info->append(*y);
 	info->append(" rozmozylo sie");
-	addEventsInfo(info);
+	addEventsInfo(*info);
 }
 void World::addDeathInfo(const Organism& deadOrganism, const Organism& killingOrganism) {
-	string* info = new string("Organizm ");
-	char* img = new char[2];
-	img[0] = deadOrganism.getImage();
-	img[1] = '\0';
-	info->append(img);
-	info->append(" o wspolrzednych: ");
-	char* tmpX = new char[2];
-	_itoa(deadOrganism.getX(), tmpX, 10);
-	string* x = new string(tmpX);
-	info->append(*x);
-	info->append(", ");
-	char* tmpY = new char[2];
-	_itoa(deadOrganism.getY(), tmpY, 10);
-	string* y = new string(tmpY);
-	info->append(*y);
-	info->append(" zostal zabity przez ");
-	img[0] = killingOrganism.getImage();
-	info->append(img);
-	addEventsInfo(info);
+	if (!deadOrganism.checkIfAlive()) {
+		string* info = new string("Organizm ");
+		char* img = new char[2];
+		img[0] = deadOrganism.getImage();
+		img[1] = '\0';
+		info->append(img);
+		info->append(" o wspolrzednych: ");
+		char* tmpX = new char[2];
+		_itoa(deadOrganism.getX(), tmpX, 10);
+		string* x = new string(tmpX);
+		info->append(*x);
+		info->append(", ");
+		char* tmpY = new char[2];
+		_itoa(deadOrganism.getY(), tmpY, 10);
+		string* y = new string(tmpY);
+		info->append(*y);
+		info->append(" zostal zabity przez ");
+		img[0] = killingOrganism.getImage();
+		info->append(img);
+		addEventsInfo(*info);
+	}
 }
 int World::getBoardSizeX() const {
 	return boardSizeX;
@@ -171,32 +173,28 @@ bool World::checkIfAnimal(int xPosition, int yPosition) {
 	return false;
 }
 void World::printWorld() {
+	system("cls");
 	setCursorPosition(0, 1);
 	cout << "Wiktoria Kubacka 193370" << endl << endl;
+	cout << "Aby poruszac sie uzywaj strzalek, x - aktywacja specjalnej umiejetnosci czlowieka, z - zapisz, w - wczytaj z pliku";
 	for (int x = 0; x < boardSizeX; x++) {
-		setCursorPosition(x * 2, 3);
-		cout << "__";
+		setCursorPosition(x + 1, 4);
+		cout << "_";
 	}
 	cout << endl;
 	for (int y = 0; y < boardSizeY; y++) {
+		cout << '|' << endl;
 		for (int x = 0; x < boardSizeX; x++) {
-			setCursorPosition(x * 2, y + 4);
-			cout << "|";
+			setCursorPosition(x + 1, y + BOARD_START_Y);
 			cout << getImageXY(x, y);
 		}
 		cout << '|' << endl;
 	}
 	cout << endl;
-	int yPosition = 2;
-	for (int i = 0; i < boardSizeY; i++) {
-		setCursorPosition(2 * boardSizeX + 5, 2 + yPosition);
-		yPosition += 1;
-		cout << "                                                           ";
-	}
-	yPosition = 2;
+	int yPosition = 0;
 	for (int i = 0; i < boardSizeY && i < allEventsInfo.size(); i++) {
 		if (!allEventsInfo[i]->empty()) {
-			setCursorPosition(2 * boardSizeX + 5, 2 + yPosition);
+			setCursorPosition(boardSizeX + INFO_START_X, BOARD_START_Y + yPosition);
 			yPosition += 1;
 			cout << *allEventsInfo[i];
 		}
@@ -214,9 +212,12 @@ void World::incrementRoundCounter() {
 	roundCounter += 1;
 }
 coordinates* World::getRandomEmptyField() const {
-	coordinates newCoordinates = { rand() % boardSizeX, rand() % boardSizeY };
-	while (checkFieldXY(newCoordinates.x, newCoordinates.y)) {
+	coordinates newCoordinates;
+	while (true) {
 		newCoordinates = { rand() % boardSizeX, rand() % boardSizeY };
+		if (!checkFieldXY(newCoordinates.x, newCoordinates.y) && !checkFieldXY(newCoordinates.x - 1, newCoordinates.y) && !checkFieldXY(newCoordinates.x + 1, newCoordinates.y) && !checkFieldXY(newCoordinates.x, newCoordinates.y - 1) && !checkFieldXY(newCoordinates.x, newCoordinates.y + 1)) {
+			break;
+		}
 	}
 	return &newCoordinates;
 }
@@ -230,7 +231,7 @@ Human* World::getHuman() {
 	return nullptr;
 }
 void World::addOrganism(Organism* newOrganism) {
-	allOrganisms.insert(allOrganisms.begin(), newOrganism);
+	allOrganisms.insert(allOrganisms.end(), newOrganism);
 }
 void World::sortOrganisms() {
 	int i = 0;
@@ -260,6 +261,100 @@ void World::setCursorPosition(int xPosition, int yPosition) {
 	cursorCoordinates.X = xPosition;
 	cursorCoordinates.Y = yPosition;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorCoordinates);
+}
+void World::save(string& filename) {
+	this->sortOrganisms();
+	fstream file;
+	file.open(filename, fstream::out);
+	file << boardSizeX << endl;
+	file << boardSizeY << endl;
+	file << allOrganisms.size() << endl;
+	for (int i = 0; i < allOrganisms.size(); i++) {
+		file << allOrganisms[i]->getImage() << endl << allOrganisms[i]->checkIfAlive() << endl << allOrganisms[i]->getAge() << endl << allOrganisms[i]->getInitiative() << endl;
+		file << allOrganisms[i]->getStrength() << endl << allOrganisms[i]->getX() << endl << allOrganisms[i]->getY() << endl;
+		if (allOrganisms[i]->getImage() == HUMAN_IMAGE) {
+			Human* humanPointer = dynamic_cast<Human*>(allOrganisms[i]);
+			file << humanPointer->superpowerState() << endl << humanPointer->getRoundCounter() << endl;
+		}
+	}
+	file.close();
+}
+void World::loadFromFile(string& filename) {
+	fstream file;
+	file.open(filename, fstream::in);
+	if (file.is_open()) {
+		for (int i = allOrganisms.size() - 1; i >= 0; i--) {
+			Organism* tmp = allOrganisms[i];
+			allOrganisms.erase(allOrganisms.begin() + i);
+			delete tmp;
+		}
+		int amountOfOrganisms;
+		file >> boardSizeX;
+		file >> boardSizeY;
+		file >> amountOfOrganisms;
+		char organismImage;
+		bool alive, superpowerActive;
+		int age, initiative, strength, x, y, roundCount;
+		for (int i = 0; i < amountOfOrganisms; i++) {
+			file >> organismImage >> alive >> age >> initiative >> strength >> x >> y;
+			Organism* newOrganism = nullptr;
+			if (organismImage == ANTELOPE_IMAGE) {
+				newOrganism = new Antelope(x, y, this);
+			}
+			else if (organismImage == DANDELION_IMAGE) {
+				newOrganism = new Dandelion(x, y, this);
+			}
+			else if (organismImage == FOX_IMAGE) {
+				newOrganism = new Fox(x, y, this);
+			}
+			else if (organismImage == GRASS_IMAGE) {
+				newOrganism = new Grass(x, y, this);
+			}
+			else if (organismImage == GUARANA_IMAGE) {
+				newOrganism = new Guarana(x, y, this);
+			}
+			else if (organismImage == HUMAN_IMAGE) {
+				newOrganism = new Human(x, y, this);
+				file >> superpowerActive >> roundCounter;
+			}
+			else if (organismImage == NIGHTSHADE_IMAGE) {
+				newOrganism = new Nightshade(x, y, this);
+			}
+			else if (organismImage == SHEEP_IMAGE) {
+				newOrganism = new Sheep(x, y, this);
+			}
+			else if (organismImage == SOSNOWSKY_HOGWEED_IMAGE) {
+				newOrganism = new SosnowskyHogweed(x, y, this);
+			}
+			else if (organismImage == TURTLE_IMAGE) {
+				newOrganism = new Turtle(x, y, this);
+			}
+			else if (organismImage == WOLF_IMAGE) {
+				newOrganism = new Wolf(x, y, this);
+			}
+			newOrganism->setStrength(strength);
+			newOrganism->setInitiative(initiative);
+			newOrganism->setAliveState(alive);
+			newOrganism->setAge(age);
+			if (newOrganism->getImage() == HUMAN_IMAGE) {
+				Human* humanPointer = dynamic_cast<Human*>(newOrganism);
+				humanPointer->setSuperpowerState(superpowerActive);
+				humanPointer->setRoundCounter(roundCounter);
+			}
+			allOrganisms.push_back(newOrganism);
+		}
+		file.close();
+	}
+	else {
+		cout << "Plik nie istnieje!";
+		char input = EMPTY;
+		while (true) {
+			input = _getch();
+			if (input == NEW_LINE) {
+				break;
+			}
+		}
+	}
 }
 World::~World() {
 

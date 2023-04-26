@@ -37,8 +37,24 @@ int main() {
 				}
 			}
 		}
-		else if (character == 'x' && newWorld.getHuman()->canSuperpowerBeActivated()) {
+		else if (character == 'x' && newWorld.getHuman() != nullptr && newWorld.getHuman()->canSuperpowerBeActivated()) {
 			newWorld.getHuman()->activateSuperpower();
+		}
+		else if (character == 'z') {
+			system("cls");
+			cout << "Podaj nazwe pliku, w ktorym chcesz zapisac stan: " << endl;
+			string filename;
+			cin >> filename;
+			newWorld.save(filename);
+			newWorld.printWorld();
+		}
+		else if (character == 'w') {
+			system("cls");
+			cout << "Podaj nazwe pliku, z ktorego chcesz odczytac stan: " << endl;
+			string filename;
+			cin >> filename;
+			newWorld.loadFromFile(filename);
+			newWorld.printWorld();
 		}
 		else if (character == NEW_ROUND) {
 			newWorld.performRound();

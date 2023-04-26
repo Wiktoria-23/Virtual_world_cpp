@@ -34,7 +34,7 @@ bool Fox::checkField(direction moveDirection) {
 		}
 		return true;
 	}
-	else if (moveDirection == DOWN) {//napraw poruszanie siê lisa
+	else if (moveDirection == DOWN) {
 		if (currentWorld->checkFieldXY(x, y + speed)) {
 			if (currentWorld->getOrganismFromXY(x, y + speed).getStrength() > strength) {
 				return false;
@@ -43,16 +43,27 @@ bool Fox::checkField(direction moveDirection) {
 		return true;
 	}
 }
+bool Fox::checkIfAnyMovePossible() {
+	if ((currentWorld->checkFieldXY(x - speed, y) && currentWorld->getOrganismFromXY(x - speed, y).getStrength() < strength) || (currentWorld->checkFieldXY(x + speed, y) && currentWorld->getOrganismFromXY(x + speed, y).getStrength() < strength) || (currentWorld->checkFieldXY(x, y - speed) && currentWorld->getOrganismFromXY(x, y - speed).getStrength() < strength) || (currentWorld->checkFieldXY(x, y + speed) && currentWorld->getOrganismFromXY(x, y + speed).getStrength() < strength)) {
+		return true;
+	}
+	else if ((!currentWorld->checkFieldXY(x - speed, y) && x - 1 >= 0) || (!currentWorld->checkFieldXY(x + speed, y) && x + speed < currentWorld->getBoardSizeX()) || (!currentWorld->checkFieldXY(x, y - speed) && y - speed >= 0) || (!currentWorld->checkFieldXY(x, y + speed) && y + speed < currentWorld->getBoardSizeX())) {
+		return true;
+	}
+	return false;
+}
 void Fox::action() {
 	if (checkIfAnyMovePossible()) {
 		direction moveDirection;
-		while (true) {
-			moveDirection = (direction)(rand() % 4);
-			if (checkMove(moveDirection)) {
-				if (checkField(moveDirection)) {
-					setMoveDirection(moveDirection);
-					baseMovement();
-					break;
+		if (checkIfAnyMovePossible()) {
+			while (true) {
+				moveDirection = (direction)(rand() % 4);
+				if (checkMove(moveDirection)) {
+					if (checkField(moveDirection)) {
+						setMoveDirection(moveDirection);
+						baseMovement();
+						break;
+					}
 				}
 			}
 		}
