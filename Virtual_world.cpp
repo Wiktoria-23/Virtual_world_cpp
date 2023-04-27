@@ -28,7 +28,7 @@ int main() {
 	newWorld.printWorld();
 	while (active) {
 		character = _getch();
-		if (character == 0 || character == 224 || character == -32) {//sprawdź dlaczego -32
+		if (character == 0 || character == 224 || character == -32) {
 			character = _getch();
 			if (newWorld.getHuman() != nullptr) {
 				if (character == KEY_ARROW_UP) {
