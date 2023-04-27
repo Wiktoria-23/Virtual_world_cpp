@@ -7,6 +7,7 @@
 #define KEY_ARROW_DOWN 80
 #define KEY_ARROW_RIGHT 77
 #define KEY_ARROW_LEFT 75
+#define ARROW_CHAR -32
 #define MIN_FIELD 100
 #define MAX_X 90
 #define MAX_Y 35
@@ -28,7 +29,7 @@ int main() {
 	newWorld.printWorld();
 	while (active) {
 		character = _getch();
-		if (character == 0 || character == 224 || character == -32) {
+		if (character == ARROW_CHAR) {
 			character = _getch();
 			if (newWorld.getHuman() != nullptr) {
 				if (character == KEY_ARROW_UP) {
