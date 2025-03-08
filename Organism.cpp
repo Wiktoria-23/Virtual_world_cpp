@@ -1,6 +1,8 @@
 #include "Organism.h"
 
-Organism::Organism(int xPosition, int yPosition, World* newWorld) : x(xPosition), y(yPosition), currentWorld(newWorld), age(NULL), alive(true) {
+Organism::Organism(
+	int xPosition, int yPosition, World* newWorld
+	) : x(xPosition), y(yPosition), currentWorld(newWorld), age(NULL), alive(true) {
 }
 Organism* Organism::getCollision(direction moveDirection) {
 	Organism* collidingOrganism = nullptr;

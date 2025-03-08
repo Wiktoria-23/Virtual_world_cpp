@@ -9,7 +9,12 @@ void Plant::action() {
 	grow();
 }
 bool Plant::checkPossibilityToGrow() const {
-	if (!currentWorld->checkFieldXY(x - 1, y) || !currentWorld->checkFieldXY(x + 1, y) || !currentWorld->checkFieldXY(x, y - 1) || !currentWorld->checkFieldXY(x, y + 1)) {
+	if (
+		!currentWorld->checkFieldXY(x - 1, y)
+		|| !currentWorld->checkFieldXY(x + 1, y)
+		|| !currentWorld->checkFieldXY(x, y - 1)
+		|| !currentWorld->checkFieldXY(x, y + 1)
+		) {
 		return true;
 	}
 	return false;

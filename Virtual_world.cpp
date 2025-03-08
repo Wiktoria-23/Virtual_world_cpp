@@ -46,7 +46,10 @@ int main() {
 				}
 			}
 		}
-		else if (character == 'x' && newWorld.getHuman() != nullptr && newWorld.getHuman()->canSuperpowerBeActivated()) {
+		else if (
+			character == 'x' && newWorld.getHuman() != nullptr
+			&& newWorld.getHuman()->canSuperpowerBeActivated()
+			) {
 			newWorld.getHuman()->activateSuperpower();
 		}
 		else if (character == 'z') {

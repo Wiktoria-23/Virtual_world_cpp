@@ -20,7 +20,8 @@ void Turtle::collision(Organism* collidingOrganism) {
 		tryToBreed(collidingOrganism);
 		return;
 	}
-	if (collidingOrganism->getStrength() < 5 && currentWorld->checkIfAnimal(collidingOrganism->getX(), collidingOrganism->getY())) {
+	if (collidingOrganism->getStrength() < 5 &&
+		currentWorld->checkIfAnimal(collidingOrganism->getX(), collidingOrganism->getY())) {
 		Animal* collidingAnimal = dynamic_cast<Animal*>(collidingOrganism);
 		if (collidingAnimal->getMoveDirection() == UP) {
 			collidingAnimal->setMoveDirection(DOWN);

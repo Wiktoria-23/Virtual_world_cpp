@@ -176,7 +176,8 @@ void World::printWorld() {
 	system("cls");
 	setCursorPosition(0, 1);
 	cout << "Wiktoria Kubacka 193370" << endl << endl;
-	cout << "Aby poruszac sie uzywaj strzalek, x - aktywacja specjalnej umiejetnosci czlowieka, z - zapisz, w - wczytaj z pliku";
+	cout << "Aby poruszac sie uzywaj strzalek, ";
+     cout << "x - aktywacja specjalnej umiejetnosci czlowieka, z - zapisz, w - wczytaj z pliku";
 	for (int x = 0; x < boardSizeX; x++) {
 		setCursorPosition(x + 1, 4);
 		cout << "_";
@@ -215,7 +216,11 @@ coordinates* World::getRandomEmptyField() const {
 	coordinates newCoordinates;
 	while (true) {
 		newCoordinates = { rand() % boardSizeX, rand() % boardSizeY };
-		if (!checkFieldXY(newCoordinates.x, newCoordinates.y) && !checkFieldXY(newCoordinates.x - 1, newCoordinates.y) && !checkFieldXY(newCoordinates.x + 1, newCoordinates.y) && !checkFieldXY(newCoordinates.x, newCoordinates.y - 1) && !checkFieldXY(newCoordinates.x, newCoordinates.y + 1)) {
+		if (!checkFieldXY(newCoordinates.x, newCoordinates.y)
+			&& !checkFieldXY(newCoordinates.x - 1, newCoordinates.y)
+			&& !checkFieldXY(newCoordinates.x + 1, newCoordinates.y)
+			&& !checkFieldXY(newCoordinates.x, newCoordinates.y - 1)
+			&& !checkFieldXY(newCoordinates.x, newCoordinates.y + 1)) {
 			break;
 		}
 	}
@@ -244,12 +249,16 @@ void World::sortOrganisms() {
 		}
 		int highestAge = NULL;
 		for (int l = i; l < allOrganisms.size(); l++) {
-			if (allOrganisms[l]->getInitiative() == highestInitiative && allOrganisms[l]->getAge() > highestAge) {
+			if (allOrganisms[l]->getInitiative() == highestInitiative
+				&& allOrganisms[l]->getAge() > highestAge) {
 				highestAge = allOrganisms[l]->getAge();
 			}
 		}
 		int m = i;
-		while (allOrganisms[m]->getInitiative() != highestInitiative && allOrganisms[m]->getAge() == highestAge) {
+		while (
+			allOrganisms[m]->getInitiative() != highestInitiative
+			&& allOrganisms[m]->getAge() == highestAge
+			) {
 			m++;
 		}
 		allOrganisms.insert(allOrganisms.begin() + i, allOrganisms[m]);
@@ -269,8 +278,12 @@ void World::save(string& filename) const {
 	file << boardSizeY << endl;
 	file << allOrganisms.size() << endl;
 	for (int i = 0; i < allOrganisms.size(); i++) {
-		file << allOrganisms[i]->getImage() << endl << allOrganisms[i]->checkIfAlive() << endl << allOrganisms[i]->getAge() << endl << allOrganisms[i]->getInitiative() << endl;
-		file << allOrganisms[i]->getStrength() << endl << allOrganisms[i]->getX() << endl << allOrganisms[i]->getY() << endl;
+
+		file << allOrganisms[i]->getImage() << endl << allOrganisms[i]->checkIfAlive() << endl;
+		file << allOrganisms[i]->getAge() << endl << allOrganisms[i]->getInitiative() << endl;
+		file << allOrganisms[i]->getStrength() << endl << allOrganisms[i]->getX() << endl;
+		file << allOrganisms[i]->getY() << endl;
+
 		if (allOrganisms[i]->getImage() == HUMAN_IMAGE) {
 			Human* humanPointer = dynamic_cast<Human*>(allOrganisms[i]);
 			file << humanPointer->superpowerState() << endl << humanPointer->getRoundCounter() << endl;

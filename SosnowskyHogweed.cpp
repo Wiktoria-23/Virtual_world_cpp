@@ -1,7 +1,8 @@
 #include "SosnowskyHogweed.h"
 #include "Animal.h"
 
-SosnowskyHogweed::SosnowskyHogweed(int xPosition, int yPosition, World* newWorld) : Plant(xPosition, yPosition, newWorld) {
+SosnowskyHogweed::SosnowskyHogweed(
+	int xPosition, int yPosition, World* newWorld) : Plant(xPosition, yPosition, newWorld) {
 	strength = SOSNOWSKY_HOGWEED_STRENGTH;
 	image = SOSNOWSKY_HOGWEED_IMAGE;
 }

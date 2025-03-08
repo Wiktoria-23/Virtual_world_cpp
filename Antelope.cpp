@@ -17,7 +17,10 @@ void Antelope::collision(Organism* collidingOrganism) {
 	if (collidingOrganism->checkIfAlive() && image != collidingOrganism->getImage()) {
 		int survive = rand() % 2;
 		if (survive == 0) {
-			if (currentWorld->checkFieldXY(x, y - 1) || currentWorld->checkFieldXY(x, y + 1) || currentWorld->checkFieldXY(x - 1, y) || currentWorld->checkFieldXY(x + 1, y)) {
+			if (
+				currentWorld->checkFieldXY(x, y - 1) || currentWorld->checkFieldXY(x, y + 1)
+				|| currentWorld->checkFieldXY(x - 1, y) || currentWorld->checkFieldXY(x + 1, y)
+				) {
 				setSpeed(BASE_ANIMAL_SPEED);
 				while (true) {
 					direction moveDirection = (direction)(rand() % 4);
